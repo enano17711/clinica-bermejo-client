@@ -11,6 +11,7 @@ import { DatesProvider } from "@mantine/dates"
 import "dayjs/locale/es"
 import DetailsDoctor from "./views/doctorViews/DetailsDoctor.jsx"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import DetailsBrand from "./views/brandViews/DetailsBrand.jsx"
 
 function App() {
    return (
@@ -25,6 +26,7 @@ function App() {
                         <Route path="/doctor" element={<IndexDoctor />} />
                         <Route path="/doctor/:id" element={<DetailsDoctor />} />
                         <Route path="/brand" element={<IndexBrand />} />
+                        <Route path="/brand/:id" element={<DetailsBrand />} />
                      </Routes>
                   </MainLayout>
                   <ReactQueryDevtools initialIsOpen={false} />

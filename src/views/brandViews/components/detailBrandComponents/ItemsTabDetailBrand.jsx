@@ -1,17 +1,19 @@
 import React from "react"
 import { Card, TextInput } from "@mantine/core"
 import DataTable from "react-data-table-component"
-import { useColumnsCitas } from "../../hooks/useColumnsCitas.jsx"
-import { useDoctor } from "../../hooks/useDoctor.jsx"
+import { useColumnsItems } from "../../hooks/useColumnsItems.jsx"
+import { useBrand } from "../../hooks/useBrand.jsx"
 import { useSearchTextTable } from "../../hooks/useSearchTextTable.jsx"
 import { IconSearch } from "@tabler/icons-react"
+import { useParams } from "react-router-dom"
 
-const CitasTabDetailDoctor = ({}) => {
-   const { doctorData } = useDoctor("79deab8d-0256-4a83-5f5a-08db4fe01d07")
-   const { columnsTableCitas } = useColumnsCitas()
+const ItemsTabDetailBrand = ({}) => {
+   const { id } = useParams()
+   const { brandData } = useBrand(id)
+   const { columnsTableItems } = useColumnsItems()
 
    const { filterRows, filterText, setFilterText } = useSearchTextTable(
-      doctorData?.appointments
+      brandData?.items
    )
    return (
       <Card>
@@ -19,11 +21,11 @@ const CitasTabDetailDoctor = ({}) => {
             <TextInput
                value={filterText}
                onChange={(e) => setFilterText(e.target.value)}
-               placeholder="Buscar Departamento"
+               placeholder="Buscar Marca"
                icon={<IconSearch />}
             />
             <DataTable
-               columns={columnsTableCitas}
+               columns={columnsTableItems}
                data={filterRows}
                responsive
                pagination
@@ -33,4 +35,4 @@ const CitasTabDetailDoctor = ({}) => {
    )
 }
 
-export default CitasTabDetailDoctor
+export default ItemsTabDetailBrand
