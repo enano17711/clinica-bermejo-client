@@ -29,7 +29,7 @@ const DetailDataDoctorSection = () => {
                <Avatar size="xl" />
                <Title>Juan Perez</Title>
                <Badge size="lg" radius="xs">
-                  Ginecologo
+                  Ginecólogo
                </Badge>
                <Group>
                   <Group>
