@@ -7,14 +7,14 @@ import { useSearchTextTable } from "../../hooks/useSearchTextTable.jsx"
 import { IconSearch } from "@tabler/icons-react"
 import { useParams } from "react-router-dom"
 
-const ItemsTabDetailBrand = ({}) => {
-   const { id } = useParams()
+const ItemsTabDetailBrand = ({ id }) => {
    const { brandData } = useBrand(id)
    const { columnsTableItems } = useColumnsItems()
 
    const { filterRows, filterText, setFilterText } = useSearchTextTable(
-      brandData?.items
+      brandData?.items || []
    )
+
    return (
       <Card>
          <Card.Section>

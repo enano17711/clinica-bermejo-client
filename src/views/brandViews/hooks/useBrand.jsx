@@ -7,10 +7,11 @@ async function getBrand(id) {
 }
 
 export function useBrand(id) {
-   const { data } = useQuery({
+   const { data, isLoading } = useQuery({
       queryKey: ["getBrand", id],
       queryFn: () => getBrand(id),
+      enabled: !!id,
    })
 
-   return { brandData: data?.data }
+   return { brandData: data?.data, isLoading }
 }

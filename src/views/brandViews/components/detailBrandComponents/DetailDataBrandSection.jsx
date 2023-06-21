@@ -1,6 +1,8 @@
 import { Avatar, Card, Stack, Text, Title } from "@mantine/core"
+import { useBrand } from "../../hooks/useBrand.jsx"
 
-const DetailDataBrandSection = () => {
+const DetailDataBrandSection = ({ id }) => {
+   const {} = useBrand()
    return (
       <Card>
          <Card.Section>

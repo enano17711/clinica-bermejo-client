@@ -14,11 +14,11 @@ const queryErrorHandler = (error) => {
 
 export function generateQueryClient() {
    return new QueryClient({
-      logger: {
-         log: console.log,
-         warn: console.warn,
-         error: console.error,
-      },
+      // logger: {
+      //    log: console.log,
+      //    warn: console.warn,
+      //    error: console.error,
+      // },
       defaultOptions: {
          queries: {
             onError: queryErrorHandler,
