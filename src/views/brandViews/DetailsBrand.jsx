@@ -12,7 +12,7 @@ const DetailsBrand = () => {
          <DetailDataBrandSection id={id} />
 
          <Tabs variant="pills" radius="md" defaultValue="items">
-            <Tabs.List grow mb="md">
+            <Tabs.List grow px={20} bg="white" pb={20}>
                <Tabs.Tab value="items" icon={<IconStethoscope size="1rem" />}>
                   Items
                </Tabs.Tab>

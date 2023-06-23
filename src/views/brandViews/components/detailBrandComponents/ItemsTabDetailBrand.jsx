@@ -5,7 +5,6 @@ import { useColumnsItems } from "../../hooks/useColumnsItems.jsx"
 import { useBrand } from "../../hooks/useBrand.jsx"
 import { useSearchTextTable } from "../../hooks/useSearchTextTable.jsx"
 import { IconSearch } from "@tabler/icons-react"
-import { useParams } from "react-router-dom"
 
 const ItemsTabDetailBrand = ({ id }) => {
    const { brandData } = useBrand(id)
@@ -16,7 +15,7 @@ const ItemsTabDetailBrand = ({ id }) => {
    )
 
    return (
-      <Card>
+      <Card px={40}>
          <Card.Section>
             <TextInput
                value={filterText}

@@ -1,12 +1,13 @@
 import React, { useState } from "react"
 import { useBrands } from "./hooks/useBrands.jsx"
-import { Card } from "@mantine/core"
+import { Breadcrumbs, Card, Kbd } from "@mantine/core"
 import { useColumnsBrand } from "./hooks/useColumnsBrand.jsx"
 import DataTable from "react-data-table-component"
 import ModalCreateBrand from "./components/ModalCreateBrand.jsx"
 import ModalDeleteBrand from "./components/ModalDeleteBrand.jsx"
 import DrawerDetailsBrand from "./components/DrawerDetailsBrand.jsx"
 import OptionsTableSection from "../../components/OptionsTableSection.jsx"
+import { Link } from "react-router-dom"
 
 const Index = () => {
    const [opened, setOpened] = useState(false)
@@ -36,7 +37,7 @@ const Index = () => {
       setPageNumber(page)
    }
 
-   const handleRowSelect = ({ allSelected, selectedCount, selectedRows }) => {
+   const handleRowSelect = ({ selectedRows }) => {
       if (selectedRows.length > 0) {
          setBrandForDrawer(selectedRows[0])
          setOpenDrawerBrand(true)
@@ -53,7 +54,25 @@ const Index = () => {
             setOpenDrawerBrand={setOpenDrawerBrand}
          />
          <Card>
-            <Card.Section inheritPadding py="sm" withBorder>
+            <Card.Section
+               inheritPadding
+               py="sm"
+               withBorder
+               sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: "20px",
+               }}
+            >
+               <Breadcrumbs>
+                  <Link to="/">
+                     <Kbd>Inicio</Kbd>
+                  </Link>
+                  <Link to="/brand">
+                     <Kbd>Marcas</Kbd>
+                  </Link>
+               </Breadcrumbs>
                <OptionsTableSection
                   setOpened={setOpened}
                   columnSearch={columnSearch}
