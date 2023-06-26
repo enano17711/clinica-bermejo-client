@@ -3,6 +3,7 @@ import { Notifications } from "@mantine/notifications"
 import MainLayout from "./layouts/MainLayout.jsx"
 import IndexDoctor from "./views/doctorViews/Index.jsx"
 import IndexBrand from "./views/brandViews/Index.jsx"
+import IndexUnit from "./views/unitViews/Index.jsx"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { queryClient } from "./api/react-query/queryClient.js"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
@@ -27,6 +28,7 @@ function App() {
                         <Route path="/doctor/:id" element={<DetailsDoctor />} />
                         <Route path="/brand" element={<IndexBrand />} />
                         <Route path="/brand/:id" element={<DetailsBrand />} />
+                        <Route path="/unit" element={<IndexUnit />} />
                      </Routes>
                   </MainLayout>
                   <ReactQueryDevtools initialIsOpen={false} />

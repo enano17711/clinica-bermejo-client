@@ -25,7 +25,7 @@ const ModalDeleteBrand = () => {
          title={<Title order={4}>Eliminar Marca</Title>}
       >
          <Stack>
-            <Text>Se eliminara al Marca {deleteBrandData.name}</Text>
+            <Text>Se eliminara la Marca {deleteBrandData.name}</Text>
             <Group position="right">
                <Button color="red" onClick={() => handleDeleteBrand()}>
                   Eliminar
