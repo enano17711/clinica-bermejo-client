@@ -98,7 +98,7 @@ const ModalCreateUnit = ({ opened, setOpened }) => {
                   errors={errors}
                   min={1}
                   max={4294967295}
-               />{" "}
+               />
                <TextInputForCreation
                   name={"description"}
                   control={control}
