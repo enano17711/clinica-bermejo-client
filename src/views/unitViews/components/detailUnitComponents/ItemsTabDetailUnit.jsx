@@ -1,17 +1,17 @@
 import React from "react"
 import { Card, TextInput } from "@mantine/core"
 import DataTable from "react-data-table-component"
-import { useSimpleColumnsItems } from "../../../../hooks/useSimpleColumnsItems.jsx"
-import { useBrand } from "../../hooks/useBrand.jsx"
-import { useSimpleSearchTextTable } from "../../../../hooks/useSimpleSearchTextTable.jsx"
+import { useUnit } from "../../hooks/useUnit.jsx"
 import { IconSearch } from "@tabler/icons-react"
+import { useSimpleSearchTextTable } from "../../../../hooks/useSimpleSearchTextTable.jsx"
+import { useSimpleColumnsItems } from "../../../../hooks/useSimpleColumnsItems.jsx"
 
-const ItemsTabDetailBrand = ({ id }) => {
-   const { brandData } = useBrand(id)
+const ItemsTabDetailUnit = ({ id }) => {
+   const { unitData } = useUnit(id)
    const { columnsTableItems } = useSimpleColumnsItems()
 
    const { filterRows, filterText, setFilterText } = useSimpleSearchTextTable(
-      brandData?.items || []
+      unitData?.items || []
    )
 
    return (
@@ -34,4 +34,4 @@ const ItemsTabDetailBrand = ({ id }) => {
    )
 }
 
-export default ItemsTabDetailBrand
+export default ItemsTabDetailUnit

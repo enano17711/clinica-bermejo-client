@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-export const useSearchTextTable = (data) => {
+export const useSimpleSearchTextTable = (data) => {
    const [filterText, setFilterText] = useState("")
 
    const filterRows = data.filter((row) => {

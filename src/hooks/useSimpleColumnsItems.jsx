@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 
-export const useColumnsItems = () => {
+export const useSimpleColumnsItems = () => {
    const columnsTableItems = useMemo(
       () => [
          {

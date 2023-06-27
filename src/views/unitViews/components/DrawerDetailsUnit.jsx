@@ -74,6 +74,7 @@ const DrawerDetailsUnit = ({ openDrawerUnit, unit, setOpenDrawerUnit }) => {
 
    useEffect(() => {
       setUnitUpdateData({
+         id: unit?.id,
          name: unit?.name,
          description: unit?.description,
          shortName: unit?.shortName,
@@ -163,51 +164,53 @@ const DrawerDetailsUnit = ({ openDrawerUnit, unit, setOpenDrawerUnit }) => {
                   })
                }
             />
-            <NativeSelect
-               data={["+", "-", "*", "/"]}
-               label="Operación"
-               description="Selecciona la operación"
-               placeholder="click para seleccionar"
-               disabled={!inputsEnabled}
-               value={unitUpdateData.operation}
-               icon={<IconMathSymbols size={14} />}
-               withAsterisk
-               error={
-                  unitUpdateData.operation === ""
-                     ? "El código es obligatorio"
-                     : false
-               }
-               onChange={(e) =>
-                  setUnitUpdateData({
-                     ...unitUpdateData,
-                     operation: e.target.value,
-                  })
-               }
-            />
-            <NumberInput
-               label={"Valor"}
-               description={"Ingresa el valor (1 al 4.294.967.295)"}
-               placeholder={"Ej: 1"}
-               icon={<IconCalculator size={14} />}
-               min={1}
-               max={4294967295}
-               disabled={!inputsEnabled}
-               value={unitUpdateData.value}
-               onChange={(e) =>
-                  setUnitUpdateData({
-                     ...unitUpdateData,
-                     value: e,
-                  })
-               }
-               withAsterisk
-               error={
-                  unitUpdateData.value === 0 ||
-                  unitUpdateData.value === "" ||
-                  false
-                     ? "El valor es obligatorio"
-                     : false
-               }
-            />
+            <Group position="apart" grow>
+               <NativeSelect
+                  data={["+", "-", "*", "/"]}
+                  label="Operación"
+                  description="Selecciona la operación"
+                  placeholder="click para seleccionar"
+                  disabled={!inputsEnabled}
+                  value={unitUpdateData.operation}
+                  icon={<IconMathSymbols size={14} />}
+                  withAsterisk
+                  error={
+                     unitUpdateData.operation === ""
+                        ? "El código es obligatorio"
+                        : false
+                  }
+                  onChange={(e) =>
+                     setUnitUpdateData({
+                        ...unitUpdateData,
+                        operation: e.target.value,
+                     })
+                  }
+               />
+               <NumberInput
+                  label={"Valor"}
+                  description={"Ingresa el valor (1 al 4.294.967.295)"}
+                  placeholder={"Ej: 1"}
+                  icon={<IconCalculator size={14} />}
+                  min={1}
+                  max={4294967295}
+                  disabled={!inputsEnabled}
+                  value={unitUpdateData.value}
+                  onChange={(e) =>
+                     setUnitUpdateData({
+                        ...unitUpdateData,
+                        value: e,
+                     })
+                  }
+                  withAsterisk
+                  error={
+                     unitUpdateData.value === 0 ||
+                     unitUpdateData.value === "" ||
+                     false
+                        ? "El valor es obligatorio"
+                        : false
+                  }
+               />
+            </Group>
             <TextInput
                label="Descripcion"
                description="Ingresa la descripcion"
