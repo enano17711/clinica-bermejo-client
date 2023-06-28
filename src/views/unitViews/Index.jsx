@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { useColumnsUnit } from "./hooks/useColumnsUnit.jsx"
-import { useUnits } from "./hooks/useUnits.jsx"
 import OptionsTableSection from "../../components/OptionsTableSection.jsx"
 import { Link } from "react-router-dom"
 import { Breadcrumbs, Card, Kbd } from "@mantine/core"
@@ -8,6 +7,7 @@ import DataTable from "react-data-table-component"
 import ModalDeleteUnit from "./components/ModalDeleteUnit.jsx"
 import DrawerDetailsUnit from "./components/DrawerDetailsUnit.jsx"
 import ModalCreateUnit from "./components/ModalCreateUnits.jsx"
+import { useGetArrayModel } from "../../hooks/useGetArrayModel.jsx"
 
 const Index = () => {
    const [opened, setOpened] = useState(false)
@@ -19,11 +19,12 @@ const Index = () => {
    const [pageNumber, setPageNumber] = useState(1)
    const [columnVisibleValue, setColumnVisibleValue] = useState([])
 
-   const { unitsData, headerData } = useUnits(
+   const { modelsData: unitsData, headerData } = useGetArrayModel(
       pageNumber,
       pageSize,
       columnSearch,
-      valueSearch.length > 2 ? valueSearch : ""
+      valueSearch.length > 2 ? valueSearch : "",
+      "Unit"
    )
    const { columnsTableUnit, columnsForSearchUnit } =
       useColumnsUnit(columnVisibleValue)

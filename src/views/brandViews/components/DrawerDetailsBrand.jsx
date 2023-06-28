@@ -8,19 +8,20 @@ import {
    IconTrash,
 } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
-import { useUpdateBrand } from "../hooks/useUpdateBrand.jsx"
 import { useAtomValue, useSetAtom } from "jotai"
 import {
    deleteBrandDataAtom,
    openBrandDeleteModalAtom,
 } from "../../../store/jotai/atoms/BrandAtoms.js"
 import { iconSizeButtonsAtom } from "../../../store/jotai/atoms/VisualAtom.js"
+import { useUpdateModel } from "../../../hooks/useUpdateModel.jsx"
 
 const DrawerDetailsBrand = ({ openDrawerBrand, brand, setOpenDrawerBrand }) => {
    const [inputsEnabled, setInputsEnabled] = useState(false)
    const [brandUpdateData, setBrandUpdateData] = useState({})
 
-   const { mutate: updateBrand, updateBrandIsLoading } = useUpdateBrand()
+   const { mutate: updateBrand, updateModelIsLoading: updateBrandIsLoading } =
+      useUpdateModel("Brand")
 
    const setDeleteBrandData = useSetAtom(deleteBrandDataAtom)
    const setOpenDeleteModal = useSetAtom(openBrandDeleteModalAtom)

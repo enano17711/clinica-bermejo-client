@@ -1,21 +1,22 @@
+import axiosInstance from "../api/axiosInstance.js"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { notifications } from "@mantine/notifications"
 import { IconCheck } from "@tabler/icons-react"
-import axiosInstance from "../../../api/axiosInstance.js"
+import React from "react"
 
-async function deleteBrand(id) {
-   const response = await axiosInstance.delete(`/Brand/${id}`)
+async function createModel(data, model) {
+   const response = await axiosInstance.post(`/${model}`, data)
    return response.data
 }
 
-export function useDeleteBrand() {
+export function useCreateModel(model) {
    const queryClient = useQueryClient()
-   const { mutate } = useMutation((id) => deleteBrand(id), {
+   const { mutate } = useMutation((data) => createModel(data, model), {
       onSuccess: () => {
-         queryClient.invalidateQueries(["getAllBrands"])
+         queryClient.invalidateQueries({ refetchType: "all" })
          notifications.show({
             title: "Operación Exitosa",
-            message: "La Marca se elimino con éxito",
+            message: `El/La ${model} se creo con éxito`,
             color: "teal",
             icon: <IconCheck size={20} />,
          })

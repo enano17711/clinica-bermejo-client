@@ -21,7 +21,6 @@ import {
    IconTrash,
 } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
-import { useUpdateUnit } from "../hooks/useUpdateUnit.jsx"
 import { useAtomValue, useSetAtom } from "jotai"
 import {
    deleteUnitDataAtom,
@@ -29,12 +28,14 @@ import {
 } from "../../../store/jotai/atoms/UnitAtoms.js"
 import { iconSizeButtonsAtom } from "../../../store/jotai/atoms/VisualAtom.js"
 import { useAllUnitBases } from "../../unitBaseViews/hooks/useGetAllUnitBases.jsx"
+import { useUpdateModel } from "../../../hooks/useUpdateModel.jsx"
 
 const DrawerDetailsUnit = ({ openDrawerUnit, unit, setOpenDrawerUnit }) => {
    const [inputsEnabled, setInputsEnabled] = useState(false)
    const [unitUpdateData, setUnitUpdateData] = useState({})
 
-   const { mutate: updateUnit, updateUnitIsLoading } = useUpdateUnit()
+   const { mutate: updateUnit, updateModelIsLoading: updateUnitIsLoading } =
+      useUpdateModel("Unit")
    const { isLoadingUnitBases, unitBasesData } = useAllUnitBases()
 
    const setDeleteUnitData = useSetAtom(deleteUnitDataAtom)

@@ -2,12 +2,12 @@ import React from "react"
 import { Card, TextInput } from "@mantine/core"
 import DataTable from "react-data-table-component"
 import { useSimpleColumnsItems } from "../../../../hooks/useSimpleColumnsItems.jsx"
-import { useBrand } from "../../hooks/useBrand.jsx"
 import { useSimpleSearchTextTable } from "../../../../hooks/useSimpleSearchTextTable.jsx"
 import { IconSearch } from "@tabler/icons-react"
+import { useGetSingleModel } from "../../../../hooks/useGetSingleModel.jsx"
 
 const ItemsTabDetailBrand = ({ id }) => {
-   const { brandData } = useBrand(id)
+   const { modelData: brandData } = useGetSingleModel(id, "Brand")
    const { columnsTableItems } = useSimpleColumnsItems()
 
    const { filterRows, filterText, setFilterText } = useSimpleSearchTextTable(

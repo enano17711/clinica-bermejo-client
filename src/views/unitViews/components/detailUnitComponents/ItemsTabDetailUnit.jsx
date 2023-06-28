@@ -1,13 +1,13 @@
 import React from "react"
 import { Card, TextInput } from "@mantine/core"
 import DataTable from "react-data-table-component"
-import { useUnit } from "../../hooks/useUnit.jsx"
 import { IconSearch } from "@tabler/icons-react"
 import { useSimpleSearchTextTable } from "../../../../hooks/useSimpleSearchTextTable.jsx"
 import { useSimpleColumnsItems } from "../../../../hooks/useSimpleColumnsItems.jsx"
+import { useGetSingleModel } from "../../../../hooks/useGetSingleModel.jsx"
 
 const ItemsTabDetailUnit = ({ id }) => {
-   const { unitData } = useUnit(id)
+   const { modelData: unitData } = useGetSingleModel(id, "Unit")
    const { columnsTableItems } = useSimpleColumnsItems()
 
    const { filterRows, filterText, setFilterText } = useSimpleSearchTextTable(

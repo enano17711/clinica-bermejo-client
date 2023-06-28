@@ -2,10 +2,10 @@ import React from "react"
 import { Controller, useForm } from "react-hook-form"
 import { IconListDetails, IconSignature } from "@tabler/icons-react"
 import { Button, Group, Modal, Stack, TextInput } from "@mantine/core"
-import { useCreateBrand } from "../hooks/useCreateBrand.jsx"
+import { useCreateModel } from "../../../hooks/useCreateModel.jsx"
 
 const ModalCreateBrand = ({ opened, setOpened }) => {
-   const createBrand = useCreateBrand()
+   const createBrand = useCreateModel("Brand")
 
    const {
       handleSubmit,

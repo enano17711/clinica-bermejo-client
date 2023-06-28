@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { useBrands } from "./hooks/useBrands.jsx"
 import { Breadcrumbs, Card, Kbd } from "@mantine/core"
 import { useColumnsBrand } from "./hooks/useColumnsBrand.jsx"
 import DataTable from "react-data-table-component"
@@ -8,6 +7,7 @@ import ModalDeleteBrand from "./components/ModalDeleteBrand.jsx"
 import DrawerDetailsBrand from "./components/DrawerDetailsBrand.jsx"
 import OptionsTableSection from "../../components/OptionsTableSection.jsx"
 import { Link } from "react-router-dom"
+import { useGetArrayModel } from "../../hooks/useGetArrayModel.jsx"
 
 const Index = () => {
    const [opened, setOpened] = useState(false)
@@ -19,11 +19,12 @@ const Index = () => {
    const [pageNumber, setPageNumber] = useState(1)
    const [columnVisibleValue, setColumnVisibleValue] = useState([])
 
-   const { brandsData, headerData } = useBrands(
+   const { modelsData: brandsData, headerData } = useGetArrayModel(
       pageNumber,
       pageSize,
       columnSearch,
-      valueSearch.length > 2 ? valueSearch : ""
+      valueSearch.length > 2 ? valueSearch : "",
+      "Brand"
    )
    const { columnsTableBrand, columnsForSearchBrand } =
       useColumnsBrand(columnVisibleValue)

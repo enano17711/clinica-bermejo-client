@@ -1,5 +1,4 @@
 import React from "react"
-import { useCreateUnit } from "../hooks/useCreateUnit.jsx"
 import { useForm } from "react-hook-form"
 import { Button, Group, Modal, Stack } from "@mantine/core"
 import {
@@ -14,10 +13,11 @@ import TextInputForCreation from "../../../components/TextInputForCreation.jsx"
 import NumberInputForCreation from "../../../components/NumberInputForCreation.jsx"
 import SelectInputForCreation from "../../../components/SelectInputForCreation.jsx"
 import { useAllUnitBases } from "../../unitBaseViews/hooks/useGetAllUnitBases.jsx"
+import { useCreateModel } from "../../../hooks/useCreateModel.jsx"
 
 const ModalCreateUnit = ({ opened, setOpened }) => {
    const { isLoadingUnitBases, unitBasesData } = useAllUnitBases()
-   const createUnit = useCreateUnit()
+   const createUnit = useCreateModel("Unit")
 
    const {
       handleSubmit,

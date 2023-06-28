@@ -1,28 +1,28 @@
-import axiosInstance from "../../../api/axiosInstance.js"
+import axiosInstance from "../api/axiosInstance.js"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { notifications } from "@mantine/notifications"
 import { IconCheck } from "@tabler/icons-react"
 
-async function updateBrand(brandData) {
-   const response = await axiosInstance.put(`/Brand/${brandData.id}`, brandData)
+async function updateModel(data, model) {
+   const response = await axiosInstance.put(`/${model}/${data.id}`, data)
    return response.data
 }
 
-export function useUpdateBrand() {
+export function useUpdateModel(model) {
    const queryClient = useQueryClient()
    const { mutate, isLoading } = useMutation(
-      (brandData) => updateBrand(brandData),
+      (data) => updateModel(data, model),
       {
          onSuccess: () => {
-            queryClient.invalidateQueries(["getAllBrands"])
+            queryClient.invalidateQueries({ refetchType: "all" })
             notifications.show({
                title: "Operación Exitosa",
-               message: "La Marca se modifico con éxito",
+               message: `La ${model} se modifico con exito`,
                color: "teal",
                icon: <IconCheck size={20} />,
             })
          },
       }
    )
-   return { mutate, updateBrandIsLoading: isLoading }
+   return { mutate, updateModelIsLoading: isLoading }
 }

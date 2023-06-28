@@ -5,12 +5,12 @@ import {
    deleteBrandDataAtom,
    openBrandDeleteModalAtom,
 } from "../../../store/jotai/atoms/BrandAtoms.js"
-import { useDeleteBrand } from "../hooks/useDeleteBrand.jsx"
+import { useDeleteModel } from "../../../hooks/useDeleteModel.jsx"
 
 const ModalDeleteBrand = () => {
    const [opened, setOpened] = useAtom(openBrandDeleteModalAtom)
    const deleteBrandData = useAtomValue(deleteBrandDataAtom)
-   const deleteBrand = useDeleteBrand()
+   const deleteBrand = useDeleteModel("Brand")
 
    const handleDeleteBrand = () => {
       deleteBrand(deleteBrandData.id)

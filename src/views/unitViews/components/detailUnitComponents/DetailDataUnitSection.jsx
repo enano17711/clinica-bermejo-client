@@ -1,12 +1,12 @@
 import { Box, Breadcrumbs, Card, Group, Kbd } from "@mantine/core"
-import { useUnit } from "../../hooks/useUnit.jsx"
 import { Link } from "react-router-dom"
 import React from "react"
 import HeaderDetailSection from "./HeaderDetailSection.jsx"
 import HeaderListDetailSection from "./HeaderListDetailSection.jsx"
+import { useGetSingleModel } from "../../../../hooks/useGetSingleModel.jsx"
 
 const DetailDataUnitSection = ({ id }) => {
-   const { unitData } = useUnit(id)
+   const { modelData: unitData } = useGetSingleModel(id, "Unit")
 
    return (
       <Card>

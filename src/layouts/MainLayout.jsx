@@ -3,7 +3,6 @@ import {
    AppShell,
    Navbar,
    Header,
-   Footer,
    MediaQuery,
    Burger,
    useMantineTheme,
@@ -12,7 +11,7 @@ import {
    Box,
 } from "@mantine/core"
 import BrandLayout from "./BrandLayout.jsx"
-import NavItemLayout from "./NavItemLayout.jsx"
+import NavMenuLayout from "./NavMenuLayout.jsx"
 import ShortsHeaderLayout from "./ShortsHeaderLayout.jsx"
 import { IconSearch } from "@tabler/icons-react"
 
@@ -55,22 +54,7 @@ export default function MainLayout({ children }) {
                   </Center>
                </Navbar.Section>
                <Navbar.Section grow pt="md">
-                  <NavItemLayout
-                     arrayMenus={[
-                        "Departamentos",
-                        "Trabajadores",
-                        "Proveedores",
-                     ]}
-                  />
-                  <NavItemLayout
-                     arrayMenus={[
-                        "Inventario",
-                        "Marcas",
-                        "Categorías",
-                        "Items",
-                        "Unidades",
-                     ]}
-                  />
+                  <NavMenuLayout />
                </Navbar.Section>
             </Navbar>
          }

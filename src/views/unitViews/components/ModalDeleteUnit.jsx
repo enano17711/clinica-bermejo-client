@@ -4,13 +4,13 @@ import {
    deleteUnitDataAtom,
    openUnitDeleteModalAtom,
 } from "../../../store/jotai/atoms/UnitAtoms.js"
-import { useDeleteUnit } from "../hooks/useDeleteUnit.jsx"
 import { Button, Group, Modal, Stack, Text, Title } from "@mantine/core"
+import { useDeleteModel } from "../../../hooks/useDeleteModel.jsx"
 
 const ModalDeleteUnit = () => {
    const [opened, setOpened] = useAtom(openUnitDeleteModalAtom)
    const deleteUnitData = useAtomValue(deleteUnitDataAtom)
-   const deleteUnit = useDeleteUnit()
+   const deleteUnit = useDeleteModel("Unit")
 
    const handleDeleteUnit = () => {
       deleteUnit(deleteUnitData.id)

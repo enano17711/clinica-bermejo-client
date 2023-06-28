@@ -8,12 +8,12 @@ import {
    Text,
    Title,
 } from "@mantine/core"
-import { useBrand } from "../../hooks/useBrand.jsx"
 import { Link } from "react-router-dom"
 import React from "react"
+import { useGetSingleModel } from "../../../../hooks/useGetSingleModel.jsx"
 
 const DetailDataBrandSection = ({ id }) => {
-   const { brandData } = useBrand(id)
+   const { modelData: brandData } = useGetSingleModel(id, "Brand")
 
    return (
       <Card>
