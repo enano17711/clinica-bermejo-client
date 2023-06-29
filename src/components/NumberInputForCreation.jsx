@@ -1,58 +1,49 @@
 import React from "react"
 import { Controller } from "react-hook-form"
 import { NumberInput } from "@mantine/core"
+import { IconSignature } from "@tabler/icons-react"
+import { useTranslation } from "react-i18next"
+import { firstLetterToLower } from "../utils/index.js"
 
-const NumberInputForCreation = ({
-   name,
-   control,
-   label,
-   description = "",
-   placeholder = "",
-   icon,
-   errors = null,
-   defaultValue,
-   min = 0,
-   max = 1000000000,
-}) => {
+const NumberInputForCreation = ({ name, model, control, errors = null }) => {
+   const { t } = useTranslation()
    return (
       <>
          {errors === null ? (
             <Controller
-               name={name}
+               name={firstLetterToLower(name)}
                control={control}
                render={({ field }) => (
                   <NumberInput
                      {...field}
-                     label={label}
-                     description={description}
-                     placeholder={placeholder}
-                     icon={icon}
-                     defaultValue={defaultValue}
-                     min={min}
-                     max={max}
+                     label={t(`labelInput${name}`)}
+                     description={t(`descriptionInput${name}`)}
+                     placeholder={t(`placeholderInput${name}${model}`)}
+                     icon={<IconSignature size={14} />}
+                     min={1}
+                     max={4294967295}
                   />
                )}
             />
          ) : (
             <Controller
-               name={name}
+               name={firstLetterToLower(name)}
                control={control}
                rules={{ required: true }}
                render={({ field }) => (
                   <NumberInput
                      {...field}
-                     label={label}
-                     description={description}
-                     placeholder={placeholder}
-                     icon={icon}
+                     label={t(`labelInput${name}`)}
+                     description={t(`descriptionInput${name}`)}
+                     placeholder={t(`placeholderInput${name}${model}`)}
+                     icon={<IconSignature size={14} />}
                      withAsterisk
                      error={
-                        errors[name]?.type === "required" &&
-                        `El ${label} es obligatorio`
+                        errors[firstLetterToLower(name)]?.type === "required" &&
+                        t(`errorInput${name}`)
                      }
-                     defaultValue={defaultValue}
-                     min={min}
-                     max={max}
+                     min={1}
+                     max={4294967295}
                   />
                )}
             />

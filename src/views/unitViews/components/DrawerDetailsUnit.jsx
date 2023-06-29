@@ -1,25 +1,6 @@
-import {
-   Button,
-   Drawer,
-   Group,
-   NativeSelect,
-   NumberInput,
-   Stack,
-   TextInput,
-   Title,
-} from "@mantine/core"
+import { Button, Drawer, Group, Stack, Title } from "@mantine/core"
 import React, { useEffect, useState } from "react"
-import {
-   IconCalculator,
-   IconClick,
-   IconDeviceFloppy,
-   IconDna,
-   IconListDetails,
-   IconMathSymbols,
-   IconPencil,
-   IconSignature,
-   IconTrash,
-} from "@tabler/icons-react"
+import { IconDeviceFloppy, IconPencil, IconTrash } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 import { useAtomValue, useSetAtom } from "jotai"
 import {
@@ -29,6 +10,9 @@ import {
 import { iconSizeButtonsAtom } from "../../../store/jotai/atoms/VisualAtom.js"
 import { useAllUnitBases } from "../../unitBaseViews/hooks/useGetAllUnitBases.jsx"
 import { useUpdateModel } from "../../../hooks/useUpdateModel.jsx"
+import TextInputForUpdate from "../../../components/TextInputForUpdate.jsx"
+import NumberInputForUpdate from "../../../components/NumberInputForUpdate.jsx"
+import SelectInputForUpdate from "../../../components/SelectInputForUpdate.jsx"
 
 const DrawerDetailsUnit = ({ openDrawerUnit, unit, setOpenDrawerUnit }) => {
    const [inputsEnabled, setInputsEnabled] = useState(false)
@@ -83,7 +67,7 @@ const DrawerDetailsUnit = ({ openDrawerUnit, unit, setOpenDrawerUnit }) => {
          operation: unit?.operation,
          unitBaseId: unit?.unitBase?.id,
       })
-   }, [unit])
+   }, [unit, inputsEnabled])
 
    return (
       <Drawer
@@ -93,47 +77,28 @@ const DrawerDetailsUnit = ({ openDrawerUnit, unit, setOpenDrawerUnit }) => {
          title={<Title order={4}>{`${unit?.name?.split(" ")[0]}`}</Title>}
       >
          <Stack>
-            <TextInput
-               label="Nombre"
-               description="Ingresa el nombre"
-               placeholder="Ej: Solutech"
-               icon={<IconSignature size={14} />}
-               withAsterisk
-               disabled={!inputsEnabled}
-               error={
-                  unitUpdateData.name === ""
-                     ? "El nombre es obligatorio"
-                     : false
-               }
-               value={unitUpdateData.name}
-               onChange={(e) =>
-                  setUnitUpdateData({
-                     ...unitUpdateData,
-                     name: e.target.value,
-                  })
-               }
+            <TextInputForUpdate
+               name="Name"
+               model="Unit"
+               enabled={!inputsEnabled}
+               state={unitUpdateData.name}
+               setState={setUnitUpdateData}
+               error
             />
-            <TextInput
-               label={"Código"}
-               description={"Ingresa el código"}
-               placeholder={"Ej: M"}
-               icon={<IconDna size={14} />}
-               disabled={!inputsEnabled}
-               withAsterisk
-               error={
-                  unitUpdateData.shortName === ""
-                     ? "El código es obligatorio"
-                     : false
-               }
-               value={unitUpdateData.shortName}
-               onChange={(e) =>
-                  setUnitUpdateData({
-                     ...unitUpdateData,
-                     shortName: e.target.value,
-                  })
-               }
+            <TextInputForUpdate
+               name="ShortName"
+               model="Unit"
+               enabled={!inputsEnabled}
+               state={unitUpdateData.shortName}
+               setState={setUnitUpdateData}
+               error
             />
-            <NativeSelect
+            <SelectInputForUpdate
+               name="UnitBaseId"
+               model="Unit"
+               enabled={!inputsEnabled}
+               state={unitUpdateData.unitBaseId}
+               setState={setUnitUpdateData}
                data={
                   isLoadingUnitBases
                      ? ["Cargando"]
@@ -144,87 +109,33 @@ const DrawerDetailsUnit = ({ openDrawerUnit, unit, setOpenDrawerUnit }) => {
                           }
                        })
                }
-               label={"Unidad Base"}
-               description={"Selecciona la unidad base"}
-               placeholder={"click para seleccionar"}
-               disabled={!inputsEnabled}
-               value={unitUpdateData.unitBaseId}
-               icon={<IconClick size={14} />}
-               withAsterisk
-               error={
-                  unitUpdateData.unitBaseId === "" ||
-                  unitUpdateData.unitBaseId ===
-                     "00000000-0000-0000-0000-000000000000"
-                     ? "El código es obligatorio"
-                     : false
-               }
-               onChange={(e) =>
-                  setUnitUpdateData({
-                     ...unitUpdateData,
-                     unitBaseId: e.target.value,
-                  })
-               }
+               error
             />
             <Group position="apart" grow>
-               <NativeSelect
+               <SelectInputForUpdate
+                  name="Operation"
+                  model="Unit"
+                  enabled={!inputsEnabled}
+                  state={unitUpdateData.operation}
+                  setState={setUnitUpdateData}
                   data={["+", "-", "*", "/"]}
-                  label="Operación"
-                  description="Selecciona la operación"
-                  placeholder="click para seleccionar"
-                  disabled={!inputsEnabled}
-                  value={unitUpdateData.operation}
-                  icon={<IconMathSymbols size={14} />}
-                  withAsterisk
-                  error={
-                     unitUpdateData.operation === ""
-                        ? "El código es obligatorio"
-                        : false
-                  }
-                  onChange={(e) =>
-                     setUnitUpdateData({
-                        ...unitUpdateData,
-                        operation: e.target.value,
-                     })
-                  }
+                  error
                />
-               <NumberInput
-                  label={"Valor"}
-                  description={"Ingresa el valor (1 al 4.294.967.295)"}
-                  placeholder={"Ej: 1"}
-                  icon={<IconCalculator size={14} />}
-                  min={1}
-                  max={4294967295}
-                  disabled={!inputsEnabled}
-                  value={unitUpdateData.value}
-                  onChange={(e) =>
-                     setUnitUpdateData({
-                        ...unitUpdateData,
-                        value: e,
-                     })
-                  }
-                  withAsterisk
-                  error={
-                     unitUpdateData.value === 0 ||
-                     unitUpdateData.value === "" ||
-                     false
-                        ? "El valor es obligatorio"
-                        : false
-                  }
+               <NumberInputForUpdate
+                  name="Value"
+                  model="Unit"
+                  enabled={!inputsEnabled}
+                  state={unitUpdateData.value}
+                  setState={setUnitUpdateData}
+                  error
                />
             </Group>
-            <TextInput
-               label="Descripcion"
-               description="Ingresa la descripcion"
-               placeholder="Ej: Marca para las muelas"
-               icon={<IconListDetails size={14} />}
-               disabled={!inputsEnabled}
-               value={unitUpdateData.description}
-               onChange={(e) =>
-                  setUnitUpdateData({
-                     ...unitUpdateData,
-                     description: e.target.value,
-                  })
-               }
+            <TextInputForUpdate
+               name="Description"
+               model="Unit"
+               enabled={!inputsEnabled}
+               state={unitUpdateData.description}
+               setState={setUnitUpdateData}
             />
 
             {inputsEnabled === false ? (

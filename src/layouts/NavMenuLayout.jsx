@@ -10,7 +10,9 @@ const NavMenuLayout = () => {
       <>
          <NavItemMenuLayout label={"Home"} rute={""} />
          <NavLink
-            active={location.pathname === "/unit"}
+            active={
+               location.pathname === "/unit" || location.pathname === "/brand"
+            }
             label="Inventario"
             icon={<IconFingerprint size={16} stroke={1.5} />}
             childrenOffset={28}

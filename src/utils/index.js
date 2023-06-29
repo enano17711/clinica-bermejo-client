@@ -7,6 +7,10 @@ export const strToObj = (str) => {
    return obj
 }
 
+export const firstLetterToLower = (str) => {
+   return str.charAt(0).toLowerCase() + str.slice(1)
+}
+
 export const specialTyTypes = [
    "General",
    "Cardiology",

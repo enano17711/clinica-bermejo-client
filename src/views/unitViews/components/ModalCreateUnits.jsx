@@ -1,14 +1,6 @@
 import React from "react"
 import { useForm } from "react-hook-form"
 import { Button, Group, Modal, Stack } from "@mantine/core"
-import {
-   IconCalculator,
-   IconClick,
-   IconDna,
-   IconListDetails,
-   IconMathSymbols,
-   IconSignature,
-} from "@tabler/icons-react"
 import TextInputForCreation from "../../../components/TextInputForCreation.jsx"
 import NumberInputForCreation from "../../../components/NumberInputForCreation.jsx"
 import SelectInputForCreation from "../../../components/SelectInputForCreation.jsx"
@@ -43,30 +35,21 @@ const ModalCreateUnit = ({ opened, setOpened }) => {
          <form onSubmit={handleSubmit(onSubmit)}>
             <Stack>
                <TextInputForCreation
-                  name={"name"}
+                  name="Name"
+                  model="Unit"
                   control={control}
-                  label={"Nombre"}
-                  description={"Ingresa el nombre"}
-                  placeholder={"Ej: Metro"}
-                  icon={<IconSignature size={14} />}
                   errors={errors}
                />
                <TextInputForCreation
-                  name={"shortName"}
+                  name={"ShortName"}
+                  model="Unit"
                   control={control}
-                  label={"Código"}
-                  description={"Ingresa el código"}
-                  placeholder={"Ej: M"}
-                  icon={<IconDna size={14} />}
                   errors={errors}
                />
                <SelectInputForCreation
-                  name={"unitBaseId"}
+                  name="UnitBaseId"
+                  model="Unit"
                   control={control}
-                  label={"Unidad Base"}
-                  description={"Selecciona la unidad base"}
-                  placeholder={"click para seleccionar"}
-                  icon={<IconClick size={14} />}
                   errors={errors}
                   data={
                      isLoadingUnitBases
@@ -80,32 +63,22 @@ const ModalCreateUnit = ({ opened, setOpened }) => {
                   }
                />
                <SelectInputForCreation
-                  name={"operation"}
+                  name="Operation"
+                  model="Unit"
                   control={control}
-                  label={"Operación"}
-                  description={"Selecciona la operación"}
-                  icon={<IconMathSymbols size={14} />}
                   errors={errors}
                   data={["+", "-", "*", "/"]}
                />
                <NumberInputForCreation
-                  name={"value"}
+                  name="Value"
+                  model="Unit"
                   control={control}
-                  label={"Valor"}
-                  description={"Ingresa el valor (1 al 4.294.967.295)"}
-                  placeholder={"Ej: 1"}
-                  icon={<IconCalculator size={14} />}
                   errors={errors}
-                  min={1}
-                  max={4294967295}
                />
                <TextInputForCreation
-                  name={"description"}
+                  name="Description"
+                  model="Unit"
                   control={control}
-                  label={"Descripción"}
-                  description={"Ingresa la descripción"}
-                  placeholder={"Ej: Unidad para las fracturas"}
-                  icon={<IconListDetails size={14} />}
                />
                <Group position="right">
                   <Button type="submit">Registrar</Button>

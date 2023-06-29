@@ -1,12 +1,6 @@
-import { Button, Drawer, Group, Stack, TextInput, Title } from "@mantine/core"
+import { Button, Drawer, Group, Stack, Title } from "@mantine/core"
 import { useEffect, useState } from "react"
-import {
-   IconDeviceFloppy,
-   IconListDetails,
-   IconPencil,
-   IconSignature,
-   IconTrash,
-} from "@tabler/icons-react"
+import { IconDeviceFloppy, IconPencil, IconTrash } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
 import { useAtomValue, useSetAtom } from "jotai"
 import {
@@ -15,6 +9,7 @@ import {
 } from "../../../store/jotai/atoms/BrandAtoms.js"
 import { iconSizeButtonsAtom } from "../../../store/jotai/atoms/VisualAtom.js"
 import { useUpdateModel } from "../../../hooks/useUpdateModel.jsx"
+import TextInputForUpdate from "../../../components/TextInputForUpdate.jsx"
 
 const DrawerDetailsBrand = ({ openDrawerBrand, brand, setOpenDrawerBrand }) => {
    const [inputsEnabled, setInputsEnabled] = useState(false)
@@ -56,7 +51,7 @@ const DrawerDetailsBrand = ({ openDrawerBrand, brand, setOpenDrawerBrand }) => {
 
    useEffect(() => {
       setBrandUpdateData(brand)
-   }, [brand])
+   }, [brand, inputsEnabled])
 
    return (
       <Drawer
@@ -66,41 +61,21 @@ const DrawerDetailsBrand = ({ openDrawerBrand, brand, setOpenDrawerBrand }) => {
          title={<Title order={4}>{`${brand?.name?.split(" ")[0]}`}</Title>}
       >
          <Stack>
-            <TextInput
-               label="Nombre"
-               description="Ingresa el nombre"
-               placeholder="Ej: Solutech"
-               icon={<IconSignature size={14} />}
-               withAsterisk
-               disabled={!inputsEnabled}
-               error={
-                  brandUpdateData.name === ""
-                     ? "El nombre es obligatorio"
-                     : false
-               }
-               value={brandUpdateData.name}
-               onChange={(e) =>
-                  setBrandUpdateData({
-                     ...brandUpdateData,
-                     name: e.target.value,
-                  })
-               }
+            <TextInputForUpdate
+               name="Name"
+               model="Brand"
+               enabled={!inputsEnabled}
+               state={brandUpdateData.name}
+               setState={setBrandUpdateData}
+               error
             />
-            <TextInput
-               label="Descripcion"
-               description="Ingresa la descripcion"
-               placeholder="Ej: Marca para las muelas"
-               icon={<IconListDetails size={14} />}
-               disabled={!inputsEnabled}
-               value={brandUpdateData.description}
-               onChange={(e) =>
-                  setBrandUpdateData({
-                     ...brandUpdateData,
-                     description: e.target.value,
-                  })
-               }
+            <TextInputForUpdate
+               name="Description"
+               model="Brand"
+               enabled={!inputsEnabled}
+               state={brandUpdateData.description}
+               setState={setBrandUpdateData}
             />
-
             {inputsEnabled === false ? (
                <Group position="right">
                   <Button

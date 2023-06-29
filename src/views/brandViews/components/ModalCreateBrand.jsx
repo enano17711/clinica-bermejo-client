@@ -1,8 +1,8 @@
 import React from "react"
-import { Controller, useForm } from "react-hook-form"
-import { IconListDetails, IconSignature } from "@tabler/icons-react"
-import { Button, Group, Modal, Stack, TextInput } from "@mantine/core"
+import { useForm } from "react-hook-form"
+import { Button, Group, Modal, Stack } from "@mantine/core"
 import { useCreateModel } from "../../../hooks/useCreateModel.jsx"
+import TextInputForCreation from "../../../components/TextInputForCreation.jsx"
 
 const ModalCreateBrand = ({ opened, setOpened }) => {
    const createBrand = useCreateModel("Brand")
@@ -29,37 +29,16 @@ const ModalCreateBrand = ({ opened, setOpened }) => {
       >
          <form onSubmit={handleSubmit(onSubmit)}>
             <Stack>
-               <Controller
-                  name="name"
+               <TextInputForCreation
+                  name="Name"
+                  model="Brand"
                   control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                     <TextInput
-                        {...field}
-                        label="Nombre"
-                        description="Ingresa el nombre"
-                        placeholder="Ej: Dentol"
-                        icon={<IconSignature size={14} />}
-                        withAsterisk
-                        error={
-                           errors.name?.type === "required" &&
-                           "El nombre es obligatorio"
-                        }
-                     />
-                  )}
+                  errors={errors}
                />
-               <Controller
-                  name="description"
+               <TextInputForCreation
+                  name="Description"
+                  model="Brand"
                   control={control}
-                  render={({ field }) => (
-                     <TextInput
-                        {...field}
-                        label="Descripcion"
-                        description="Ingresa la descripcion"
-                        placeholder="Ej: Marca para las caries"
-                        icon={<IconListDetails size={14} />}
-                     />
-                  )}
                />
                <Group position="right">
                   <Button type="submit">Registrar</Button>
