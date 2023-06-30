@@ -24,6 +24,7 @@ const NavMenuLayout = () => {
          >
             <NavItemMenuLayout label={"Unidades"} rute={"unit"} />
             <NavItemMenuLayout label={"Marcas"} rute={"brand"} />
+            <NavItemMenuLayout label={"Unidades Base"} rute={"unitBase"} />
          </NavLink>
       </>
    )

@@ -14,11 +14,11 @@ import {
 import { Link } from "react-router-dom"
 import React from "react"
 import { useGetSingleModel } from "../../../../hooks/useGetSingleModel.jsx"
-import HeaderListDetailSection from "../../../../components/HeaderListDetailSection.jsx"
 import { IconCheckbox } from "@tabler/icons-react"
+import HeaderListDetailSection from "../../../../components/HeaderListDetailSection.jsx"
 
-const DetailDataUnitSection = ({ id }) => {
-   const { modelData: unitData } = useGetSingleModel(id, "Unit")
+const DetailDataUnitBaseSection = ({ id }) => {
+   const { modelData: unitBaseData } = useGetSingleModel(id, "UnitBase")
 
    return (
       <Card>
@@ -31,18 +31,18 @@ const DetailDataUnitSection = ({ id }) => {
                   <Link to="/">
                      <Kbd>Inicio</Kbd>
                   </Link>
-                  <Link to="/unit">
-                     <Kbd>Unidades</Kbd>
+                  <Link to="/unitBase">
+                     <Kbd>Unidades Base</Kbd>
                   </Link>
-                  <Link to={`/unit/${id}`}>
-                     <Kbd>{unitData?.name}</Kbd>
+                  <Link to={`/unitBase/${id}`}>
+                     <Kbd>{unitBaseData?.name}</Kbd>
                   </Link>
                </Breadcrumbs>
             </Box>
             <Group spacing="xl">
                <Stack align="center" pt={20} pb={30}>
                   <Avatar size="xl" />
-                  <Title>{unitData?.name}</Title>
+                  <Title>{unitBaseData?.name}</Title>
                   <Group>
                      <Group>
                         <ThemeIcon size="xl">
@@ -70,13 +70,10 @@ const DetailDataUnitSection = ({ id }) => {
                </Stack>
                <HeaderListDetailSection
                   data={{
-                     id: unitData?.id,
-                     name: unitData?.name,
-                     description: unitData?.description,
-                     shortName: unitData?.shortName,
-                     value: unitData?.value,
-                     operation: unitData?.operation,
-                     unitBase: unitData?.unitBase?.name,
+                     id: unitBaseData?.id,
+                     name: unitBaseData?.name,
+                     description: unitBaseData?.description,
+                     shortName: unitBaseData?.shortName,
                   }}
                />
             </Group>
@@ -85,4 +82,4 @@ const DetailDataUnitSection = ({ id }) => {
    )
 }
 
-export default DetailDataUnitSection
+export default DetailDataUnitBaseSection
