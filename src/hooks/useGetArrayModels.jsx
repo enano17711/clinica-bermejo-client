@@ -22,7 +22,7 @@ async function getModels(
    }
 }
 
-export function useGetArrayModel(
+export function useGetArrayModels(
    pageNumber = 1,
    pageSize = 50,
    searchColumn,

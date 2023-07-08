@@ -22,6 +22,16 @@ export function useUpdateModel(model) {
                icon: <IconCheck size={20} />,
             })
          },
+         onError: (error) => {
+            notifications.show({
+               title: "Operación Fallida",
+               message: `${Object.keys(error.response.data).map(
+                  (key) => `${key}: ${error.response.data[key]}`
+               )}`,
+               color: "red",
+               icon: <IconCheck size={20} />,
+            })
+         },
       }
    )
    return { mutate, updateModelIsLoading: isLoading }

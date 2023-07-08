@@ -4,11 +4,14 @@ import { Button, Group, Modal, Stack } from "@mantine/core"
 import TextInputForCreation from "../../../components/TextInputForCreation.jsx"
 import NumberInputForCreation from "../../../components/NumberInputForCreation.jsx"
 import SelectInputForCreation from "../../../components/SelectInputForCreation.jsx"
-import { useAllUnitBases } from "../../unitBaseViews/hooks/useGetAllUnitBases.jsx"
 import { useCreateModel } from "../../../hooks/useCreateModel.jsx"
+import { useGetAllModels } from "../../../hooks/useGetAllModels.jsx"
 
 const ModalCreateUnit = ({ opened, setOpened }) => {
-   const { isLoadingUnitBases, unitBasesData } = useAllUnitBases()
+   const {
+      isLoadingAllModelsData: isLoadingUnitBases,
+      allModelsData: unitBasesData,
+   } = useGetAllModels("UnitBase", "GetAllUnitBases")
    const createUnit = useCreateModel("Unit")
 
    const {

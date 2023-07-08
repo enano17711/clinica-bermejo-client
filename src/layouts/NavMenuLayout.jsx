@@ -23,8 +23,29 @@ const NavMenuLayout = () => {
             })}
          >
             <NavItemMenuLayout label={"Unidades"} rute={"unit"} />
-            <NavItemMenuLayout label={"Marcas"} rute={"brand"} />
             <NavItemMenuLayout label={"Unidades Base"} rute={"unitBase"} />
+            <NavItemMenuLayout label={"Marcas"} rute={"brand"} />
+            <NavItemMenuLayout
+               label={"Categoría de Items"}
+               rute={"categoryItem"}
+            />
+         </NavLink>
+         <NavLink
+            active={
+               location.pathname === "/customer" ||
+               location.pathname === "/supplier"
+            }
+            label="Personas"
+            icon={<IconFingerprint size={16} stroke={1.5} />}
+            childrenOffset={28}
+            color="violet"
+            variant="light"
+            sx={(theme) => ({
+               borderRadius: theme.radius.md,
+            })}
+         >
+            <NavItemMenuLayout label={"Clientes"} rute={"customer"} />
+            <NavItemMenuLayout label={"Proveedores"} rute={"supplier"} />
          </NavLink>
       </>
    )

@@ -58,3 +58,37 @@ export const specialtyFormat = [
    { value: 19, label: "Urology" },
    { value: 20, label: "Vascular" },
 ]
+
+export const formatModelSchemaForColumns = (
+   modelObject,
+   columnVisibleValue
+) => {
+   const keys = Object.keys(modelObject)
+   return keys.map((property) => {
+      return {
+         name: property,
+         selector: (row) => row[property],
+         sortable: true,
+         omit: columnVisibleValue.includes(property),
+      }
+   })
+}
+export const formatModelSchemaForSearch = (modelObject) => {
+   const keys = Object.keys(modelObject)
+   return keys.map((property) => {
+      return {
+         value: property,
+         label: property,
+      }
+   })
+}
+export const formatModelSchemaForSimpleColumns = (modelObject) => {
+   const keys = Object.keys(modelObject)
+   return keys.map((property) => {
+      return {
+         name: property,
+         selector: (row) => row[property],
+         sortable: true,
+      }
+   })
+}

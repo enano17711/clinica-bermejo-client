@@ -1,24 +1,27 @@
 import {
    Avatar,
    Box,
-   Breadcrumbs,
    Card,
    Flex,
    Group,
-   Kbd,
    Stack,
    Text,
    ThemeIcon,
    Title,
 } from "@mantine/core"
-import { Link } from "react-router-dom"
 import React from "react"
 import { useGetSingleModel } from "../../../../hooks/useGetSingleModel.jsx"
 import { IconCheckbox } from "@tabler/icons-react"
 import HeaderListDetailSection from "../../../../components/HeaderListDetailSection.jsx"
+import CustomBreadcrumbs from "../../../../components/CustomBreadCrumbs.jsx"
 
 const DetailDataUnitBaseSection = ({ id }) => {
    const { modelData: unitBaseData } = useGetSingleModel(id, "UnitBase")
+   const routes = [
+      { path: "/", title: "Inicio" },
+      { path: "/unitBase", title: "Unidades Base" },
+      { path: `/unitBase/${id}`, title: `${unitBaseData?.name}` },
+   ]
 
    return (
       <Card>
@@ -27,17 +30,7 @@ const DetailDataUnitBaseSection = ({ id }) => {
                p={20}
                sx={{ display: "flex", justifyContent: "space-between" }}
             >
-               <Breadcrumbs>
-                  <Link to="/">
-                     <Kbd>Inicio</Kbd>
-                  </Link>
-                  <Link to="/unitBase">
-                     <Kbd>Unidades Base</Kbd>
-                  </Link>
-                  <Link to={`/unitBase/${id}`}>
-                     <Kbd>{unitBaseData?.name}</Kbd>
-                  </Link>
-               </Breadcrumbs>
+               <CustomBreadcrumbs routes={routes} />
             </Box>
             <Group spacing="xl">
                <Stack align="center" pt={20} pb={30}>

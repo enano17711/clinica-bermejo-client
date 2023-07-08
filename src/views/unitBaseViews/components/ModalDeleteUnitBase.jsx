@@ -22,11 +22,11 @@ const ModalDeleteUnitBase = () => {
          centered
          opened={opened}
          onClose={() => setOpened(false)}
-         title={<Title order={4}>Eliminar Unidad</Title>}
+         title={<Title order={4}>Eliminar Unidad Base</Title>}
       >
          <Stack>
             <Text>
-               Se eliminara la Unidad {deleteUnitBaseData.name} -{" "}
+               Se eliminara la Unidad Base {deleteUnitBaseData.name} -{" "}
                {deleteUnitBaseData.shortName}
             </Text>
             <Group position="right">

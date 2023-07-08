@@ -1,24 +1,27 @@
 import {
    Avatar,
    Box,
-   Breadcrumbs,
    Card,
    Flex,
    Group,
-   Kbd,
    Stack,
    Text,
    ThemeIcon,
    Title,
 } from "@mantine/core"
-import { Link } from "react-router-dom"
 import React from "react"
 import { useGetSingleModel } from "../../../../hooks/useGetSingleModel.jsx"
 import HeaderListDetailSection from "../../../../components/HeaderListDetailSection.jsx"
 import { IconCheckbox } from "@tabler/icons-react"
+import CustomBreadcrumbs from "../../../../components/CustomBreadCrumbs.jsx"
 
-const DetailDataUnitSection = ({ id }) => {
-   const { modelData: unitData } = useGetSingleModel(id, "Unit")
+const DetailDataCategoryItemSection = ({ id }) => {
+   const { modelData: categoryItemData } = useGetSingleModel(id, "CategoryItem")
+   const routes = [
+      { path: "/", title: "Inicio" },
+      { path: "/categoryItem", title: "Categorías" },
+      { path: `/categoryItem/${id}`, title: `${categoryItemData?.name}` },
+   ]
 
    return (
       <Card>
@@ -27,22 +30,12 @@ const DetailDataUnitSection = ({ id }) => {
                p={20}
                sx={{ display: "flex", justifyContent: "space-between" }}
             >
-               <Breadcrumbs>
-                  <Link to="/">
-                     <Kbd>Inicio</Kbd>
-                  </Link>
-                  <Link to="/unit">
-                     <Kbd>Unidades</Kbd>
-                  </Link>
-                  <Link to={`/unit/${id}`}>
-                     <Kbd>{unitData?.name}</Kbd>
-                  </Link>
-               </Breadcrumbs>
+               <CustomBreadcrumbs routes={routes} />
             </Box>
             <Group spacing="xl">
                <Stack align="center" pt={20} pb={30}>
                   <Avatar size="xl" />
-                  <Title>{unitData?.name}</Title>
+                  <Title>{categoryItemData?.name}</Title>
                   <Group>
                      <Group>
                         <ThemeIcon size="xl">
@@ -70,13 +63,9 @@ const DetailDataUnitSection = ({ id }) => {
                </Stack>
                <HeaderListDetailSection
                   data={{
-                     id: unitData?.id,
-                     name: unitData?.name,
-                     description: unitData?.description,
-                     shortName: unitData?.shortName,
-                     value: unitData?.value,
-                     operation: unitData?.operation,
-                     unitBase: unitData?.unitBase?.name,
+                     id: categoryItemData?.id,
+                     name: categoryItemData?.name,
+                     description: categoryItemData?.description,
                   }}
                />
             </Group>
@@ -85,4 +74,4 @@ const DetailDataUnitSection = ({ id }) => {
    )
 }
 
-export default DetailDataUnitSection
+export default DetailDataCategoryItemSection

@@ -1,42 +1,42 @@
 import React, { useState } from "react"
-import { useColumnsUnitBase } from "./hooks/useColumnsUnitBase.jsx"
 import OptionsTableSection from "../../components/OptionsTableSection.jsx"
-import { Link } from "react-router-dom"
-import { Breadcrumbs, Card, Kbd } from "@mantine/core"
+import { Card } from "@mantine/core"
 import DataTable from "react-data-table-component"
 import ModalDeleteUnitBase from "./components/ModalDeleteUnitBase.jsx"
 import DrawerDetailsUnitBase from "./components/DrawerDetailsUnitBase.jsx"
 import ModalCreateUnitBase from "./components/ModalCreateUnitBase.jsx"
-import { useGetArrayModel } from "../../hooks/useGetArrayModel.jsx"
+import { useGetArrayModels } from "../../hooks/useGetArrayModels.jsx"
+import { usePagination } from "../../hooks/usePagination.jsx"
+import CustomBreadcrumbs from "../../components/CustomBreadCrumbs.jsx"
+import { useColumnsMainDataTable } from "../../hooks/useColumnsMainDataTable.jsx"
+import { unitBaseModelSchemaForView } from "../../dataTests/unitBaseModel.js"
 
+const routes = [
+   { path: "/", title: "Inicio" },
+   { path: "/unitBase", title: "Unidades Base" },
+]
 const Index = () => {
    const [opened, setOpened] = useState(false)
    const [openDrawerUnitBase, setOpenDrawerUnitBase] = useState(false)
    const [unitBaseForDrawer, setUnitBaseForDrawer] = useState({})
    const [valueSearch, setValueSearch] = useState("")
    const [columnSearch, setColumnSearch] = useState("name")
-   const [pageSize, setPageSize] = useState(10)
-   const [pageNumber, setPageNumber] = useState(1)
    const [columnVisibleValue, setColumnVisibleValue] = useState([])
 
-   const { modelsData: unitBasesData, headerData } = useGetArrayModel(
+   const { pageSize, pageNumber, handlePageChange, handlePerRowsChange } =
+      usePagination(10, 1)
+
+   const { modelsData: unitBasesData, headerData } = useGetArrayModels(
       pageNumber,
       pageSize,
       columnSearch,
       valueSearch.length > 2 ? valueSearch : "",
       "UnitBase"
    )
-   const { columnsTableUnitBase, columnsForSearchUnitBase } =
-      useColumnsUnitBase(columnVisibleValue)
-
-   const handlePageChange = (page) => {
-      setPageNumber(page)
-   }
-
-   const handlePerRowsChange = async (newPerPage, page) => {
-      setPageSize(newPerPage)
-      setPageNumber(page)
-   }
+   const { columnsTableModel, columnsForSearchModel } = useColumnsMainDataTable(
+      unitBaseModelSchemaForView,
+      columnVisibleValue
+   )
 
    const handleRowSelect = ({ selectedRows }) => {
       if (selectedRows.length > 0) {
@@ -66,19 +66,12 @@ const Index = () => {
                   gap: "20px",
                }}
             >
-               <Breadcrumbs>
-                  <Link to="/">
-                     <Kbd>Inicio</Kbd>
-                  </Link>
-                  <Link to="/unitBase">
-                     <Kbd>Unidades Base</Kbd>
-                  </Link>
-               </Breadcrumbs>
+               <CustomBreadcrumbs routes={routes} />
                <OptionsTableSection
                   setOpened={setOpened}
                   columnSearch={columnSearch}
                   setColumnSearch={setColumnSearch}
-                  columnsForSearchData={columnsForSearchUnitBase}
+                  columnsForSearchData={columnsForSearchModel}
                   columnVisibleValue={columnVisibleValue}
                   setColumnVisibleValue={setColumnVisibleValue}
                   valueSearch={valueSearch}
@@ -88,7 +81,7 @@ const Index = () => {
             <Card.Section inheritPadding mih={200}>
                <DataTable
                   data={unitBasesData}
-                  columns={columnsTableUnitBase}
+                  columns={columnsTableModel}
                   responsive
                   pagination
                   paginationPerPage={5}

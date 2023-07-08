@@ -1,59 +1,61 @@
 import React, { useState } from "react"
+import OptionsTableSection from "../../components/OptionsTableSection.jsx"
 import { Card } from "@mantine/core"
 import DataTable from "react-data-table-component"
-import ModalCreateBrand from "./components/ModalCreateBrand.jsx"
-import ModalDeleteBrand from "./components/ModalDeleteBrand.jsx"
-import DrawerDetailsBrand from "./components/DrawerDetailsBrand.jsx"
-import OptionsTableSection from "../../components/OptionsTableSection.jsx"
+import ModalDeleteCategoryItem from "./components/ModalDeleteCategoryItem.jsx"
+import DrawerDetailsCategoryItem from "./components/DrawerDetailsCategoryItem.jsx"
+import ModalCreateCategoryItem from "./components/ModalCreateCategoryItems.jsx"
 import { useGetArrayModels } from "../../hooks/useGetArrayModels.jsx"
 import { usePagination } from "../../hooks/usePagination.jsx"
-import CustomBreadCrumbs from "../../components/CustomBreadCrumbs.jsx"
+import CustomBreadcrumbs from "../../components/CustomBreadCrumbs.jsx"
 import { useColumnsMainDataTable } from "../../hooks/useColumnsMainDataTable.jsx"
-import { brandModelSchemaForView } from "../../dataTests/brandModel.js"
+import { categoryItemModelSchemaForView } from "../../dataTests/categoryItemModel.js"
 
 const routes = [
    { path: "/", title: "Inicio" },
-   { path: "/brand", title: "Marcas" },
+   { path: "/categoryItem", title: "Categorías" },
 ]
 
 const Index = () => {
    const [opened, setOpened] = useState(false)
-   const [openDrawerBrand, setOpenDrawerBrand] = useState(false)
-   const [brandForDrawer, setBrandForDrawer] = useState({})
+   const [openDrawerCategoryItem, setOpenDrawerCategoryItem] = useState(false)
+   const [categoryItemForDrawer, setCategoryItemForDrawer] = useState({})
    const [valueSearch, setValueSearch] = useState("")
    const [columnSearch, setColumnSearch] = useState("name")
    const [columnVisibleValue, setColumnVisibleValue] = useState([])
-
    const { pageSize, pageNumber, handlePageChange, handlePerRowsChange } =
       usePagination(10, 1)
 
-   const { modelsData: brandsData, headerData } = useGetArrayModels(
+   const { modelsData: categoryItemsData, headerData } = useGetArrayModels(
       pageNumber,
       pageSize,
       columnSearch,
       valueSearch.length > 2 ? valueSearch : "",
-      "Brand"
+      "CategoryItem"
    )
    const {
-      columnsTableModel: columnsTableBrand,
-      columnsForSearchModel: columnsForSearchBrand,
-   } = useColumnsMainDataTable(brandModelSchemaForView, columnVisibleValue)
+      columnsTableModel: columnsTableCategoryItem,
+      columnsForSearchModel: columnsForSearchCategoryItem,
+   } = useColumnsMainDataTable(
+      categoryItemModelSchemaForView,
+      columnVisibleValue
+   )
 
    const handleRowSelect = ({ selectedRows }) => {
       if (selectedRows.length > 0) {
-         setBrandForDrawer(selectedRows[0])
-         setOpenDrawerBrand(true)
+         setCategoryItemForDrawer(selectedRows[0])
+         setOpenDrawerCategoryItem(true)
       }
    }
 
    return (
       <>
-         <ModalCreateBrand opened={opened} setOpened={setOpened} />
-         <ModalDeleteBrand />
-         <DrawerDetailsBrand
-            brand={brandForDrawer}
-            openDrawerBrand={openDrawerBrand}
-            setOpenDrawerBrand={setOpenDrawerBrand}
+         <ModalCreateCategoryItem opened={opened} setOpened={setOpened} />
+         <ModalDeleteCategoryItem />
+         <DrawerDetailsCategoryItem
+            categoryItem={categoryItemForDrawer}
+            openDrawerCategoryItem={openDrawerCategoryItem}
+            setOpenDrawerCategoryItem={setOpenDrawerCategoryItem}
          />
          <Card>
             <Card.Section
@@ -67,12 +69,12 @@ const Index = () => {
                   gap: "20px",
                }}
             >
-               <CustomBreadCrumbs routes={routes} />
+               <CustomBreadcrumbs routes={routes} />
                <OptionsTableSection
                   setOpened={setOpened}
                   columnSearch={columnSearch}
                   setColumnSearch={setColumnSearch}
-                  columnsForSearchData={columnsForSearchBrand}
+                  columnsForSearchData={columnsForSearchCategoryItem}
                   columnVisibleValue={columnVisibleValue}
                   setColumnVisibleValue={setColumnVisibleValue}
                   valueSearch={valueSearch}
@@ -81,8 +83,8 @@ const Index = () => {
             </Card.Section>
             <Card.Section inheritPadding mih={200}>
                <DataTable
-                  data={brandsData}
-                  columns={columnsTableBrand}
+                  data={categoryItemsData}
+                  columns={columnsTableCategoryItem}
                   responsive
                   pagination
                   paginationPerPage={5}

@@ -3,6 +3,22 @@ import { Group, List, Stack, Text, ThemeIcon, Title } from "@mantine/core"
 import { IconCheck } from "@tabler/icons-react"
 
 const HeaderListDetailSection = ({ data }) => {
+   const renderListItems = (start, end) => {
+      return Object.keys(data || {})
+         .filter((item) => item !== "description")
+         .slice(start, end)
+         .map((key, index) => (
+            <List.Item key={index}>
+               <Title order={4}>
+                  {key}:{" "}
+                  <Text span fw={500}>
+                     {data[key]}
+                  </Text>
+               </Title>
+            </List.Item>
+         ))
+   }
+
    return (
       <Group align="start" spacing="xl">
          <Stack>
@@ -16,19 +32,7 @@ const HeaderListDetailSection = ({ data }) => {
                   </ThemeIcon>
                }
             >
-               {Object.keys(data || {})
-                  .filter((item) => item !== "description")
-                  .slice(1, 6)
-                  .map((key, index) => (
-                     <List.Item key={index}>
-                        <Title order={4}>
-                           {key} :{" "}
-                           <Text span fw={500}>
-                              {data[key]}
-                           </Text>
-                        </Title>
-                     </List.Item>
-                  ))}
+               {renderListItems(1, 6)}
             </List>
          </Stack>
          <Stack>
@@ -41,19 +45,7 @@ const HeaderListDetailSection = ({ data }) => {
                   </ThemeIcon>
                }
             >
-               {Object.keys(data || {})
-                  .filter((item) => item !== "description")
-                  .slice(6)
-                  .map((key, index) => (
-                     <List.Item key={index}>
-                        <Title order={4}>
-                           {key} :{" "}
-                           <Text span fw={500}>
-                              {data[key]}
-                           </Text>
-                        </Title>
-                     </List.Item>
-                  ))}
+               {renderListItems(6)}
                {data?.description && (
                   <List.Item>
                      <Title
@@ -61,7 +53,7 @@ const HeaderListDetailSection = ({ data }) => {
                         maw={400}
                         sx={{ display: "flex", flexWrap: "wrap" }}
                      >
-                        Descripción :{" "}
+                        Descripción:{" "}
                         <Text span fw={500} lineClamp={5}>
                            {data?.description}
                         </Text>

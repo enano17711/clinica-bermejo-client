@@ -1,19 +1,15 @@
-import {
-   Avatar,
-   Box,
-   Breadcrumbs,
-   Card,
-   Kbd,
-   Stack,
-   Text,
-   Title,
-} from "@mantine/core"
-import { Link } from "react-router-dom"
+import { Avatar, Box, Card, Stack, Text, Title } from "@mantine/core"
 import React from "react"
 import { useGetSingleModel } from "../../../../hooks/useGetSingleModel.jsx"
+import CustomBreadcrumbs from "../../../../components/CustomBreadCrumbs.jsx"
 
 const DetailDataBrandSection = ({ id }) => {
    const { modelData: brandData } = useGetSingleModel(id, "Brand")
+   const routes = [
+      { path: "/", title: "Inicio" },
+      { path: "/brand", title: "Marcas" },
+      { path: `/brand/${id}`, title: `${brandData?.name}` },
+   ]
 
    return (
       <Card>
@@ -22,17 +18,7 @@ const DetailDataBrandSection = ({ id }) => {
                p={20}
                sx={{ display: "flex", justifyContent: "space-between" }}
             >
-               <Breadcrumbs>
-                  <Link to="/">
-                     <Kbd>Inicio</Kbd>
-                  </Link>
-                  <Link to="/brand">
-                     <Kbd>Marcas</Kbd>
-                  </Link>
-                  <Link to={`/brand/${id}`}>
-                     <Kbd>{brandData?.name}</Kbd>
-                  </Link>
-               </Breadcrumbs>
+               <CustomBreadcrumbs routes={routes} />
             </Box>
             <Stack align="center" pt={50} pb={30}>
                <Avatar size="xl" />

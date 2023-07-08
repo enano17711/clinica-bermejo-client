@@ -8,11 +8,11 @@ import {
    openUnitDeleteModalAtom,
 } from "../../../store/jotai/atoms/UnitAtoms.js"
 import { iconSizeButtonsAtom } from "../../../store/jotai/atoms/VisualAtom.js"
-import { useAllUnitBases } from "../../unitBaseViews/hooks/useGetAllUnitBases.jsx"
 import { useUpdateModel } from "../../../hooks/useUpdateModel.jsx"
 import TextInputForUpdate from "../../../components/TextInputForUpdate.jsx"
 import NumberInputForUpdate from "../../../components/NumberInputForUpdate.jsx"
 import SelectInputForUpdate from "../../../components/SelectInputForUpdate.jsx"
+import { useGetAllModels } from "../../../hooks/useGetAllModels.jsx"
 
 const DrawerDetailsUnit = ({ openDrawerUnit, unit, setOpenDrawerUnit }) => {
    const [inputsEnabled, setInputsEnabled] = useState(false)
@@ -20,7 +20,10 @@ const DrawerDetailsUnit = ({ openDrawerUnit, unit, setOpenDrawerUnit }) => {
 
    const { mutate: updateUnit, updateModelIsLoading: updateUnitIsLoading } =
       useUpdateModel("Unit")
-   const { isLoadingUnitBases, unitBasesData } = useAllUnitBases()
+   const {
+      isLoadingAllModelsData: isLoadingUnitBases,
+      allModelsData: unitBasesData,
+   } = useGetAllModels("UnitBase", "GetAllUnitBases")
 
    const setDeleteUnitData = useSetAtom(deleteUnitDataAtom)
    const setOpenDeleteModal = useSetAtom(openUnitDeleteModalAtom)

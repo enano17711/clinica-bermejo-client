@@ -1,27 +1,27 @@
 import React from "react"
 import { Box, Tabs } from "@mantine/core"
 import { IconStethoscope } from "@tabler/icons-react"
-import DetailDataUnitSection from "./components/DetailDataUnitSection.jsx"
+import DetailDataCustomerSection from "./components/DetailDataCustomerSection.jsx"
 import { useParams } from "react-router-dom"
 import { useGetSingleModel } from "../../hooks/useGetSingleModel.jsx"
 import { useSimpleColumnsDataTable } from "../../hooks/useSimpleColumnsDataTable.jsx"
-import { unitModelSchema } from "../../dataTests/unitModel.js"
+import { customerModelSchema } from "../../dataTests/customerModel.js"
 import { useSimpleSearchTextTable } from "../../hooks/useSimpleSearchTextTable.jsx"
 import TabPanel from "../../components/TabPanel.jsx"
 
-const DetailsUnit = () => {
+const DetailsCustomer = () => {
    const { id } = useParams()
-   const { modelData: unitData } = useGetSingleModel(id, "Unit")
+   const { modelData: customerData } = useGetSingleModel(id, "Customer")
    const { columnsSimpleTable: columnsItemsSimpleTable } =
-      useSimpleColumnsDataTable(unitModelSchema.items[0])
+      useSimpleColumnsDataTable(customerModelSchema.sales[0] || [{}])
    const {
       filterRows: filterRowsItem,
       filterText: filterTextItem,
       setFilterText: setFilterTextItem,
-   } = useSimpleSearchTextTable(unitData?.items || [])
+   } = useSimpleSearchTextTable(customerData?.sales || [])
    const tabs = [
       {
-         tab: "items",
+         tab: "sales",
          filterRows: filterRowsItem,
          filterText: filterTextItem,
          setFilterText: setFilterTextItem,
@@ -30,8 +30,8 @@ const DetailsUnit = () => {
    ]
    return (
       <Box>
-         <DetailDataUnitSection id={id} />
-         <Tabs variant="pills" radius="md" defaultValue="items">
+         <DetailDataCustomerSection id={id} />
+         <Tabs variant="pills" radius="md" defaultValue="sales">
             <Tabs.List grow px={20} bg="white" pb={20}>
                {tabs.map((tab) => (
                   <Tabs.Tab
@@ -50,4 +50,4 @@ const DetailsUnit = () => {
       </Box>
    )
 }
-export default DetailsUnit
+export default DetailsCustomer

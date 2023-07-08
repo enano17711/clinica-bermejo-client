@@ -6,12 +6,12 @@ import { useSimpleSearchTextTable } from "../../../../hooks/useSimpleSearchTextT
 import { useSimpleColumnsItems } from "../../../../hooks/useSimpleColumnsItems.jsx"
 import { useGetSingleModel } from "../../../../hooks/useGetSingleModel.jsx"
 
-const ItemsTabDetailUnit = ({ id }) => {
-   const { modelData: unitData } = useGetSingleModel(id, "Unit")
+const ItemsTabDetailCategoryItem = ({ id }) => {
+   const { modelData: categoryItemData } = useGetSingleModel(id, "CategoryItem")
    const { columnsTableItems } = useSimpleColumnsItems()
 
    const { filterRows, filterText, setFilterText } = useSimpleSearchTextTable(
-      unitData?.items || []
+      categoryItemData?.items || []
    )
 
    return (
@@ -34,4 +34,4 @@ const ItemsTabDetailUnit = ({ id }) => {
    )
 }
 
-export default ItemsTabDetailUnit
+export default ItemsTabDetailCategoryItem
