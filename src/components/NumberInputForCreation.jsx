@@ -18,7 +18,6 @@ const NumberInputForCreation = ({ name, model, control, errors = null }) => {
             <NumberInput
                {...field}
                label={t(`labelInput${name}`)}
-               description={t(`descriptionInput${name}`)}
                placeholder={t(`placeholderInput${name}${model}`)}
                icon={<IconSignature size={14} />}
                min={1}

@@ -17,7 +17,6 @@ const TextInputForCreation = ({ name, model, control, errors = null }) => {
                   <TextInput
                      {...field}
                      label={t(`labelInput${name}`)}
-                     description={t(`descriptionInput${name}`)}
                      placeholder={t(`placeHolderInput${name}${model}`)}
                      icon={<IconSignature size={14} />}
                   />
@@ -32,7 +31,6 @@ const TextInputForCreation = ({ name, model, control, errors = null }) => {
                   <TextInput
                      {...field}
                      label={t(`labelInput${name}`)}
-                     description={t(`descriptionInput${name}`)}
                      placeholder={t(`placeholderInput${name}${model}`)}
                      icon={<IconSignature size={14} />}
                      withAsterisk

@@ -19,7 +19,6 @@ const NumberInputForUpdate = ({
          {error === null ? (
             <NumberInput
                label={t(`labelInput${name}`)}
-               description={t(`descriptionInput${name}`)}
                placeholder={t(`placeHolderInput${name}${model}`)}
                icon={<IconSignature size={14} />}
                disabled={enabled}
@@ -38,7 +37,6 @@ const NumberInputForUpdate = ({
          ) : (
             <NumberInput
                label={t(`labelInput${name}`)}
-               description={t(`descriptionInput${name}`)}
                placeholder={t(`placeholderInput${name}${model}`)}
                icon={<IconSignature size={14} />}
                withAsterisk

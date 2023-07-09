@@ -1,11 +1,11 @@
 import React from "react"
-import { Controller } from "react-hook-form"
-import { NativeSelect } from "@mantine/core"
-import { IconSignature } from "@tabler/icons-react"
 import { useTranslation } from "react-i18next"
+import { Controller } from "react-hook-form"
 import { firstLetterToLower } from "../utils/index.js"
+import { MultiSelect } from "@mantine/core"
+import { IconSignature } from "@tabler/icons-react"
 
-const SelectInputForCreation = ({
+const MultiSelectInputForCreation = ({
    name,
    model,
    control,
@@ -20,12 +20,19 @@ const SelectInputForCreation = ({
                name={firstLetterToLower(name)}
                control={control}
                render={({ field }) => (
-                  <NativeSelect
+                  <MultiSelect
                      {...field}
                      data={data}
                      label={t(`labelInput${name}`)}
                      placeholder={t(`placeholderInput${name}${model}`)}
                      icon={<IconSignature size={14} />}
+                     maxDropdownHeight={120}
+                     searchable
+                     nothingFound="No se encontraron resultados"
+                     error={
+                        errors[firstLetterToLower(name)]?.type === "required" &&
+                        t(`errorInput${name}`)
+                     }
                   />
                )}
             />
@@ -35,7 +42,7 @@ const SelectInputForCreation = ({
                control={control}
                rules={{ required: true }}
                render={({ field }) => (
-                  <NativeSelect
+                  <MultiSelect
                      {...field}
                      data={data}
                      label={t(`labelInput${name}`)}
@@ -53,5 +60,4 @@ const SelectInputForCreation = ({
       </>
    )
 }
-
-export default SelectInputForCreation
+export default MultiSelectInputForCreation

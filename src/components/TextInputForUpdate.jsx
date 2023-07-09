@@ -19,7 +19,6 @@ const TextInputForUpdate = ({
          {error === null ? (
             <TextInput
                label={t(`labelInput${name}`)}
-               description={t(`descriptionInput${name}`)}
                placeholder={t(`placeHolderInput${name}${model}`)}
                icon={<IconSignature size={14} />}
                disabled={enabled}
@@ -36,7 +35,6 @@ const TextInputForUpdate = ({
          ) : (
             <TextInput
                label={t(`labelInput${name}`)}
-               description={t(`descriptionInput${name}`)}
                placeholder={t(`placeholderInput${name}${model}`)}
                icon={<IconSignature size={14} />}
                withAsterisk

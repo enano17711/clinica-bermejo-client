@@ -1,10 +1,10 @@
 import React from "react"
-import { NativeSelect } from "@mantine/core"
-import { IconClick } from "@tabler/icons-react"
 import { useTranslation } from "react-i18next"
+import { MultiSelect } from "@mantine/core"
+import { IconClick } from "@tabler/icons-react"
 import { firstLetterToLower } from "../utils/index.js"
 
-const SelectInputForUpdate = ({
+const MultiSelectInputForUpdate = ({
    name,
    model,
    error = null,
@@ -14,11 +14,10 @@ const SelectInputForUpdate = ({
    data,
 }) => {
    const { t } = useTranslation()
-
    return (
       <>
          {error === null ? (
-            <NativeSelect
+            <MultiSelect
                data={data}
                label={t(`labelInput${name}`)}
                placeholder={t(`placeHolderInput${name}${model}`)}
@@ -29,13 +28,13 @@ const SelectInputForUpdate = ({
                   setState((prevState) => {
                      return {
                         ...prevState,
-                        [firstLetterToLower(name)]: e.target.value,
+                        [firstLetterToLower(name)]: e,
                      }
                   })
                }
             />
          ) : (
-            <NativeSelect
+            <MultiSelect
                data={data}
                label={t(`labelInput${name}`)}
                placeholder={t(`placeHolderInput${name}${model}`)}
@@ -46,14 +45,15 @@ const SelectInputForUpdate = ({
                   setState((prevState) => {
                      return {
                         ...prevState,
-                        [firstLetterToLower(name)]: e.target.value,
+                        [firstLetterToLower(name)]: e,
                      }
                   })
                }
                withAsterisk
                error={
                   state === "" ||
-                  state === "00000000-0000-0000-0000-000000000000"
+                  state === "00000000-0000-0000-0000-000000000000" ||
+                  state.length === 0
                      ? t(`errorInput${name}`)
                      : false
                }
@@ -63,4 +63,4 @@ const SelectInputForUpdate = ({
    )
 }
 
-export default SelectInputForUpdate
+export default MultiSelectInputForUpdate
