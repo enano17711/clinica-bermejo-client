@@ -49,7 +49,7 @@ const DetailsItem = () => {
    return (
       <Box>
          <DetailDataItemSection id={id} />
-         <Tabs variant="pills" radius="md" defaultValue="sales">
+         <Tabs variant="pills" radius="md" defaultValue="categoryItems">
             <Tabs.List grow px={20} bg="white" pb={20}>
                {tabs.map((tab) => (
                   <Tabs.Tab
