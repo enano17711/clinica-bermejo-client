@@ -12,6 +12,7 @@ import { useUpdateModel } from "../../../hooks/useUpdateModel.jsx"
 import TextInputForUpdate from "../../../components/TextInputForUpdate.jsx"
 import SelectInputForUpdate from "../../../components/SelectInputForUpdate.jsx"
 import { useGetAllModels } from "../../../hooks/useGetAllModels.jsx"
+import MultiSelectInputForUpdate from "../../../components/MultiSelectInputForUpdate.jsx"
 
 const DrawerDetailsItem = ({ openDrawerItem, item, setOpenDrawerItem }) => {
    const [inputsEnabled, setInputsEnabled] = useState(false)
@@ -23,6 +24,14 @@ const DrawerDetailsItem = ({ openDrawerItem, item, setOpenDrawerItem }) => {
    const { isLoadingAllModelsData: isLoadingBrand, allModelsData: brandsData } =
       useGetAllModels("Brand", "GetAllBrands")
 
+   const { isLoadingAllModelsData: isLoadingUnit, allModelsData: unitsData } =
+      useGetAllModels("Unit", "GetAllUnits")
+
+   const {
+      isLoadingAllModelsData: isLoadingCategoryItem,
+      allModelsData: categoryItemsData,
+   } = useGetAllModels("CategoryItem", "GetAllCategoryItems")
+
    const setDeleteItemData = useSetAtom(deleteItemDataAtom)
    const setOpenDeleteModal = useSetAtom(openItemDeleteModalAtom)
    const iconSizeButtons = useAtomValue(iconSizeButtonsAtom)
@@ -30,7 +39,23 @@ const DrawerDetailsItem = ({ openDrawerItem, item, setOpenDrawerItem }) => {
    const handleSubmit = (e) => {
       e.stopPropagation()
       e.preventDefault()
-      if ([itemUpdateData.name, itemUpdateData.code].includes("")) return
+      if (
+         [
+            itemUpdateData.name,
+            itemUpdateData.code,
+            itemUpdateData.brandId,
+         ].includes("")
+      )
+         return
+
+      if (itemUpdateData.brandId === "00000000-0000-0000-0000-000000000000")
+         return
+
+      if (
+         itemUpdateData.unitIds.length === 0 ||
+         itemUpdateData.categoryItemIds.length === 0
+      )
+         return
 
       updateItem({ ...itemUpdateData })
       setOpenDrawerItem(false)
@@ -61,6 +86,10 @@ const DrawerDetailsItem = ({ openDrawerItem, item, setOpenDrawerItem }) => {
          code: item?.code,
          description: item?.description,
          brandId: item?.brand?.id,
+         unitIds: item?.units?.map((unit) => unit.id),
+         categoryItemIds: item?.categoryItems?.map(
+            (categoryItem) => categoryItem.id
+         ),
       })
    }, [item, inputsEnabled])
 
@@ -80,27 +109,65 @@ const DrawerDetailsItem = ({ openDrawerItem, item, setOpenDrawerItem }) => {
                setState={setItemUpdateData}
                error
             />
-            <TextInputForUpdate
-               name="Code"
+            <Group position="apart" grow>
+               <TextInputForUpdate
+                  name="Code"
+                  model="Item"
+                  enabled={!inputsEnabled}
+                  state={itemUpdateData.shortName}
+                  setState={setItemUpdateData}
+                  error
+               />
+               <SelectInputForUpdate
+                  name="BrandId"
+                  model="Item"
+                  enabled={!inputsEnabled}
+                  state={itemUpdateData.brandId}
+                  setState={setItemUpdateData}
+                  data={
+                     isLoadingBrand
+                        ? ["Cargando"]
+                        : brandsData.map((brand) => {
+                             return {
+                                label: `${brand.name}`,
+                                value: brand.id,
+                             }
+                          })
+                  }
+                  error
+               />
+            </Group>
+            <MultiSelectInputForUpdate
+               name="UnitIds"
                model="Item"
                enabled={!inputsEnabled}
-               state={itemUpdateData.shortName}
-               setState={setItemUpdateData}
-               error
-            />
-            <SelectInputForUpdate
-               name="BrandId"
-               model="Item"
-               enabled={!inputsEnabled}
-               state={itemUpdateData.brandId}
+               state={itemUpdateData.unitIds}
                setState={setItemUpdateData}
                data={
-                  isLoadingBrand
+                  isLoadingUnit
                      ? ["Cargando"]
-                     : brandsData.map((brand) => {
+                     : unitsData.map((unit) => {
                           return {
-                             label: `${brand.name}`,
-                             value: brand.id,
+                             label: `${unit.name}`,
+                             value: unit.id,
+                          }
+                       })
+               }
+               error
+            />
+            <MultiSelectInputForUpdate
+               name="CategoryItemIds"
+               model="Item"
+               enabled={!inputsEnabled}
+               state={itemUpdateData.categoryItemIds}
+               setState={setItemUpdateData}
+               data={
+                  isLoadingCategoryItem
+                     ? ["Cargando"]
+                     : categoryItemsData.map((categoryItem) => {
+                          return {
+                             label: `${categoryItem.name}`,
+                             value: categoryItem.id,
                           }
                        })
                }

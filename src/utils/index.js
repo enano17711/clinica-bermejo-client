@@ -73,6 +73,16 @@ export const formatModelSchemaForColumns = (
       }
    })
 }
+export const formatModelSchemaForSimpleColumns = (modelObject) => {
+   const keys = Object.keys(modelObject)
+   return keys.map((property) => {
+      return {
+         name: property,
+         selector: (row) => row[property],
+         sortable: true,
+      }
+   })
+}
 export const formatModelSchemaForSearch = (modelObject) => {
    const keys = Object.keys(modelObject)
    return keys.map((property) => {
@@ -82,13 +92,11 @@ export const formatModelSchemaForSearch = (modelObject) => {
       }
    })
 }
-export const formatModelSchemaForSimpleColumns = (modelObject) => {
-   const keys = Object.keys(modelObject)
-   return keys.map((property) => {
+export const formatForSelectInput = (data) => {
+   return data.map((row) => {
       return {
-         name: property,
-         selector: (row) => row[property],
-         sortable: true,
+         value: row.id,
+         label: row.name,
       }
    })
 }
