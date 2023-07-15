@@ -1,17 +1,11 @@
 import React from "react"
-import { Controller } from "react-hook-form"
-import { Select } from "@mantine/core"
-import { IconSignature } from "@tabler/icons-react"
 import { useTranslation } from "react-i18next"
+import { Controller } from "react-hook-form"
 import { firstLetterToLower } from "../utils/index.js"
+import { Textarea } from "@mantine/core"
+import { IconSignature } from "@tabler/icons-react"
 
-const SelectInputForCreation = ({
-   name,
-   model,
-   control,
-   errors = null,
-   data = ["Cargando"],
-}) => {
+const TextAreaInputForCreation = ({ name, model, control, errors = null }) => {
    const { t } = useTranslation()
    return (
       <>
@@ -20,16 +14,14 @@ const SelectInputForCreation = ({
                name={firstLetterToLower(name)}
                control={control}
                render={({ field }) => (
-                  <Select
+                  <Textarea
                      {...field}
-                     data={data}
                      label={t(`labelInput${name}`)}
-                     placeholder={t(`placeholderInput${name}${model}`)}
+                     placeholder={t(`placeHolderInput${name}${model}`)}
                      icon={<IconSignature size={14} />}
-                     searchable
-                     nothingFound="No se encontraron resultados"
-                     maxDropdownHeight={120}
-                     clearable
+                     autosize
+                     minRows={2}
+                     maxRows={5}
                   />
                )}
             />
@@ -39,9 +31,8 @@ const SelectInputForCreation = ({
                control={control}
                rules={{ required: true }}
                render={({ field }) => (
-                  <Select
+                  <Textarea
                      {...field}
-                     data={data}
                      label={t(`labelInput${name}`)}
                      placeholder={t(`placeholderInput${name}${model}`)}
                      icon={<IconSignature size={14} />}
@@ -50,10 +41,8 @@ const SelectInputForCreation = ({
                         errors[firstLetterToLower(name)]?.type === "required" &&
                         t(`errorInput${name}`)
                      }
-                     searchable
-                     nothingFound="No se encontraron resultados"
-                     maxDropdownHeight={120}
-                     clearable
+                     minRows={2}
+                     maxRows={5}
                   />
                )}
             />
@@ -61,5 +50,4 @@ const SelectInputForCreation = ({
       </>
    )
 }
-
-export default SelectInputForCreation
+export default TextAreaInputForCreation

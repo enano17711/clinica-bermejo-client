@@ -25,6 +25,7 @@ import DetailsSupplier from "./views/supplierViews/DetailsSupplier.jsx"
 import IndexOrder from "./views/orderViews/Index.jsx"
 import IndexItem from "./views/itemViews/Index.jsx"
 import DetailsItem from "./views/itemViews/DetailsItem.jsx"
+import NewOrder from "./views/orderViews/NewOrder.jsx"
 
 function App() {
    return (
@@ -65,9 +66,10 @@ function App() {
                            path="/supplier/:id"
                            element={<DetailsSupplier />}
                         />
-                        <Route path="/order" element={<IndexOrder />} />
                         <Route path="/item" element={<IndexItem />} />
                         <Route path="/item/:id" element={<DetailsItem />} />
+                        <Route path="/order" element={<IndexOrder />} />
+                        <Route path="/order/new" element={<NewOrder />} />
                      </Routes>
                   </MainLayout>
                   <ReactQueryDevtools initialIsOpen={false} />

@@ -1,59 +1,71 @@
-import React from "react"
-import { Controller } from "react-hook-form"
-import { Select } from "@mantine/core"
-import { IconSignature } from "@tabler/icons-react"
+import React, { useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { firstLetterToLower } from "../utils/index.js"
+import { Controller, useWatch } from "react-hook-form"
+import { firstLetterToLower } from "../../../utils/index.js"
+import { Select } from "@mantine/core"
+import { useAtom } from "jotai"
+import { detailOrderItemDataAtom } from "../../../store/jotai/atoms/OrderAtoms.js"
 
-const SelectInputForCreation = ({
+const SelectInputForOrderCreation = ({
    name,
-   model,
    control,
    errors = null,
    data = ["Cargando"],
 }) => {
    const { t } = useTranslation()
+   const fieldName = firstLetterToLower(name)
+   const [detailOrderItemData, setDetailOrderItemData] = useAtom(
+      detailOrderItemDataAtom
+   )
+
+   const inputValue = useWatch({ name: fieldName, control })
+
+   useEffect(() => {
+      setDetailOrderItemData((prev) => {
+         return {
+            ...prev,
+            [fieldName]: inputValue,
+         }
+      })
+   }, [inputValue])
+
    return (
       <>
          {errors === null ? (
             <Controller
-               name={firstLetterToLower(name)}
+               name={fieldName}
                control={control}
                render={({ field }) => (
                   <Select
                      {...field}
                      data={data}
-                     label={t(`labelInput${name}`)}
-                     placeholder={t(`placeholderInput${name}${model}`)}
-                     icon={<IconSignature size={14} />}
                      searchable
                      nothingFound="No se encontraron resultados"
                      maxDropdownHeight={120}
-                     clearable
+                     maw={140}
+                     miw={140}
                   />
                )}
             />
          ) : (
             <Controller
-               name={firstLetterToLower(name)}
+               name={fieldName}
                control={control}
                rules={{ required: true }}
                render={({ field }) => (
                   <Select
                      {...field}
                      data={data}
-                     label={t(`labelInput${name}`)}
-                     placeholder={t(`placeholderInput${name}${model}`)}
-                     icon={<IconSignature size={14} />}
                      withAsterisk
                      error={
-                        errors[firstLetterToLower(name)]?.type === "required" &&
+                        errors[fieldName]?.type === "required" &&
                         t(`errorInput${name}`)
                      }
                      searchable
                      nothingFound="No se encontraron resultados"
                      maxDropdownHeight={120}
-                     clearable
+                     maw={140}
+                     miw={140}
                   />
                )}
             />
@@ -62,4 +74,4 @@ const SelectInputForCreation = ({
    )
 }
 
-export default SelectInputForCreation
+export default SelectInputForOrderCreation

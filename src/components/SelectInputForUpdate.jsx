@@ -1,5 +1,5 @@
 import React from "react"
-import { NativeSelect } from "@mantine/core"
+import { Select } from "@mantine/core"
 import { IconClick } from "@tabler/icons-react"
 import { useTranslation } from "react-i18next"
 import { firstLetterToLower } from "../utils/index.js"
@@ -18,7 +18,7 @@ const SelectInputForUpdate = ({
    return (
       <>
          {error === null ? (
-            <NativeSelect
+            <Select
                data={data}
                label={t(`labelInput${name}`)}
                placeholder={t(`placeHolderInput${name}${model}`)}
@@ -29,13 +29,17 @@ const SelectInputForUpdate = ({
                   setState((prevState) => {
                      return {
                         ...prevState,
-                        [firstLetterToLower(name)]: e.target.value,
+                        [firstLetterToLower(name)]: e,
                      }
                   })
                }
+               searchable
+               nothingFound="No se encontraron resultados"
+               maxDropdownHeight={120}
+               clearable
             />
          ) : (
-            <NativeSelect
+            <Select
                data={data}
                label={t(`labelInput${name}`)}
                placeholder={t(`placeHolderInput${name}${model}`)}
@@ -46,7 +50,7 @@ const SelectInputForUpdate = ({
                   setState((prevState) => {
                      return {
                         ...prevState,
-                        [firstLetterToLower(name)]: e.target.value,
+                        [firstLetterToLower(name)]: e,
                      }
                   })
                }
@@ -57,6 +61,10 @@ const SelectInputForUpdate = ({
                      ? t(`errorInput${name}`)
                      : false
                }
+               searchable
+               nothingFound="No se encontraron resultados"
+               maxDropdownHeight={120}
+               clearable
             />
          )}
       </>

@@ -33,6 +33,7 @@ const MultiSelectInputForCreation = ({
                         errors[firstLetterToLower(name)]?.type === "required" &&
                         t(`errorInput${name}`)
                      }
+                     clearable
                   />
                )}
             />
@@ -53,6 +54,7 @@ const MultiSelectInputForCreation = ({
                         errors[firstLetterToLower(name)]?.type === "required" &&
                         t(`errorInput${name}`)
                      }
+                     clearable
                   />
                )}
             />

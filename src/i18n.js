@@ -25,6 +25,9 @@ i18n.use(initReactI18next).init({
             labelInputBrandId: "Marca",
             labelInputUnitIds: "Unidades",
             labelInputCategoryItemIds: "Categorías",
+            labelInputOrderDate: "Fecha de compra",
+            labelInputSupplierId: "Proveedor",
+            labelInputNoteId: "Tipo de movimiento",
             //inputs errors
             errorInputName: "El nombre es obligatorio",
             errorInputShortName: "El código es obligatorio",

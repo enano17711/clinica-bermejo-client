@@ -32,6 +32,7 @@ const MultiSelectInputForUpdate = ({
                      }
                   })
                }
+               clearable
             />
          ) : (
             <MultiSelect
@@ -57,6 +58,7 @@ const MultiSelectInputForUpdate = ({
                      ? t(`errorInput${name}`)
                      : false
                }
+               clearable
             />
          )}
       </>

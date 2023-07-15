@@ -100,3 +100,4 @@ export const formatForSelectInput = (data) => {
       }
    })
 }
+export const formatDataForOrderSubmit = (data) => {}

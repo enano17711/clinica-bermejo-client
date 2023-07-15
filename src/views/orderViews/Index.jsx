@@ -7,6 +7,7 @@ import { usePagination } from "../../hooks/usePagination.jsx"
 import CustomBreadcrumbs from "../../components/CustomBreadCrumbs.jsx"
 import { useColumnsMainDataTable } from "../../hooks/useColumnsMainDataTable.jsx"
 import { orderModelSchemaForView } from "../../dataTests/orderModel.js"
+import OptionsTableForOrderSection from "../../components/OptionsTableForOrderSection.jsx"
 
 const routes = [
    { path: "/", title: "Inicio" },
@@ -57,7 +58,7 @@ const Index = () => {
                }}
             >
                <CustomBreadcrumbs routes={routes} />
-               <OptionsTableSection
+               <OptionsTableForOrderSection
                   setOpened={setOpened}
                   columnSearch={columnSearch}
                   setColumnSearch={setColumnSearch}

@@ -18,8 +18,11 @@ const DrawerDetailsItem = ({ openDrawerItem, item, setOpenDrawerItem }) => {
    const [inputsEnabled, setInputsEnabled] = useState(false)
    const [itemUpdateData, setItemUpdateData] = useState({})
 
-   const { mutate: updateItem, updateModelIsLoading: updateItemIsLoading } =
-      useUpdateModel("Item")
+   const {
+      isSuccess: isSuccessItemUpdate,
+      mutate: updateItem,
+      updateModelIsLoading: updateItemIsLoading,
+   } = useUpdateModel("Item")
 
    const { isLoadingAllModelsData: isLoadingBrand, allModelsData: brandsData } =
       useGetAllModels("Brand", "GetAllBrands")
@@ -36,7 +39,7 @@ const DrawerDetailsItem = ({ openDrawerItem, item, setOpenDrawerItem }) => {
    const setOpenDeleteModal = useSetAtom(openItemDeleteModalAtom)
    const iconSizeButtons = useAtomValue(iconSizeButtonsAtom)
 
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
       e.stopPropagation()
       e.preventDefault()
       if (
@@ -57,7 +60,10 @@ const DrawerDetailsItem = ({ openDrawerItem, item, setOpenDrawerItem }) => {
       )
          return
 
+      console.log(itemUpdateData)
+
       updateItem({ ...itemUpdateData })
+
       setOpenDrawerItem(false)
       setInputsEnabled(false)
    }
@@ -84,6 +90,8 @@ const DrawerDetailsItem = ({ openDrawerItem, item, setOpenDrawerItem }) => {
          id: item?.id,
          name: item?.name,
          code: item?.code,
+         stockItem: item?.stockItem,
+         allotment: "",
          description: item?.description,
          brandId: item?.brand?.id,
          unitIds: item?.units?.map((unit) => unit.id),
@@ -92,6 +100,12 @@ const DrawerDetailsItem = ({ openDrawerItem, item, setOpenDrawerItem }) => {
          ),
       })
    }, [item, inputsEnabled])
+
+   useEffect(() => {
+      if (isSuccessItemUpdate) {
+         itemUpdateData.unitIds.map
+      }
+   })
 
    return (
       <Drawer
