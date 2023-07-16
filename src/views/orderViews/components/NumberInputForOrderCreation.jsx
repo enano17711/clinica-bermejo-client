@@ -84,342 +84,111 @@ const NumberInputForOrderCreation = ({
    }, [inputValue, Object.keys(detailOrderItemData).length])
 
    useEffect(() => {
-      const onlyQuantity = Object.keys(detailOrderItemData).filter(
-         (key) => key.substring(36) === "DetailOrderItemQuantity"
-      )
-      const onlyCost = Object.keys(detailOrderItemData).filter(
-         (key) => key.substring(36) === "DetailOrderItemCostForTotal"
-      )
-      const onlyDiscount = Object.keys(detailOrderItemData).filter(
-         (key) => key.substring(36) === "DetailOrderItemDiscountForTotal"
-      )
-      const onlyTax = Object.keys(detailOrderItemData).filter(
-         (key) => key.substring(36) === "DetailOrderItemTaxForTotal"
-      )
-      const onlySubTotal = Object.keys(detailOrderItemData).filter(
-         (key) => key.substring(36) === "DetailOrderItemSubTotal"
-      )
-
+      const keys = {
+         DetailOrderItemQuantity: "TotalQuantity",
+         DetailOrderItemCostForTotal: "TotalCost",
+         DetailOrderItemDiscountForTotal: "TotalDiscount",
+         DetailOrderItemTaxForTotal: "TotalTax",
+         DetailOrderItemSubTotal: "TotalSubTotal",
+      }
+      const totals = {}
+      const calculatedTotals = (keys, detailOrderItemData) => {
+         Object.keys(keys).forEach((key) => {
+            const filteredKeys = Object.keys(detailOrderItemData).filter(
+               (itemKey) => itemKey.substring(36) === key
+            )
+            const total = isNaN(
+               filteredKeys.reduce(
+                  (acc, cur) => acc + Number(detailOrderItemData[cur]),
+                  0
+               )
+            )
+               ? 0
+               : Number(
+                    filteredKeys.reduce((acc, cur) => {
+                       return acc + Number(detailOrderItemData[cur])
+                    }, 0)
+                 ).toFixed(2)
+            totals[keys[key]] = total
+            setValue(keys[key], total)
+         })
+      }
       setDetailOrderItemData((prev) => {
-         setValue(
-            "TotalQuantity",
-            isNaN(onlyQuantity.reduce((acc, cur) => acc + prev[cur], 0))
-               ? 0
-               : onlyQuantity.reduce((acc, cur) => acc + prev[cur], 0)
-         )
-         setValue(
-            "TotalCost",
-            isNaN(
-               Number.parseFloat(
-                  onlyCost.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-               ).toFixed(2)
-            )
-               ? 0
-               : Number.parseFloat(
-                    onlyCost.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-                 ).toFixed(2)
-         )
-         setValue(
-            "TotalDiscount",
-            isNaN(
-               Number.parseFloat(
-                  onlyDiscount.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-               ).toFixed(2)
-            )
-               ? 0
-               : Number.parseFloat(
-                    onlyDiscount.reduce(
-                       (acc, cur) => acc + Number(prev[cur]),
-                       0
-                    )
-                 ).toFixed(2)
-         )
-         setValue(
-            "TotalTax",
-            isNaN(
-               Number.parseFloat(
-                  onlyTax.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-               ).toFixed(2)
-            )
-               ? 0
-               : Number.parseFloat(
-                    onlyTax.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-                 ).toFixed(2)
-         )
-         setValue(
-            "TotalSubTotal",
-            isNaN(
-               Number.parseFloat(
-                  onlySubTotal.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-               ).toFixed(2)
-            )
-               ? 0
-               : Number.parseFloat(
-                    onlySubTotal.reduce(
-                       (acc, cur) => acc + Number(prev[cur]),
-                       0
-                    )
-                 ).toFixed(2)
-         )
-
-         return {
-            ...prev,
-            TotalQuantity: isNaN(
-               onlyQuantity.reduce((acc, cur) => acc + prev[cur], 0)
-            )
-               ? 0
-               : onlyQuantity.reduce((acc, cur) => acc + prev[cur], 0),
-            TotalCost: isNaN(
-               Number.parseFloat(
-                  onlyCost.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-               ).toFixed(2)
-            )
-               ? 0
-               : Number.parseFloat(
-                    onlyCost.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-                 ).toFixed(2),
-            TotalDiscount: isNaN(
-               Number.parseFloat(
-                  onlyDiscount.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-               ).toFixed(2)
-            )
-               ? 0
-               : Number.parseFloat(
-                    onlyDiscount.reduce(
-                       (acc, cur) => acc + Number(prev[cur]),
-                       0
-                    )
-                 ).toFixed(2),
-            TotalTax: isNaN(
-               Number.parseFloat(
-                  onlyTax.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-               ).toFixed(2)
-            )
-               ? 0
-               : Number.parseFloat(
-                    onlyTax.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-                 ).toFixed(2),
-            TotalSubTotal: isNaN(
-               Number.parseFloat(
-                  onlySubTotal.reduce((acc, cur) => acc + Number(prev[cur]), 0)
-               ).toFixed(2)
-            )
-               ? 0
-               : Number.parseFloat(
-                    onlySubTotal.reduce(
-                       (acc, cur) => acc + Number(prev[cur]),
-                       0
-                    )
-                 ).toFixed(2),
-         }
+         calculatedTotals(keys, prev)
+         return { ...prev, ...totals }
       })
    }, [inputValue, Object.keys(detailOrderItemData).length])
 
+   const getDetailOrderItemData = (fieldName, type) => {
+      return detailOrderItemData[`${fieldName.substring(0, 36)}${type}`]
+   }
+   const getError = (fieldName, name) => {
+      return (
+         isRequired &&
+         errors[fieldName]?.type === "required" &&
+         t(`errorInput${name}`)
+      )
+   }
+   const getController = (fieldName, description, formatter) => (
+      <Controller
+         name={fieldName}
+         control={control}
+         rules={isRequired ? { required: true } : undefined}
+         render={({ field }) => (
+            <NumberInput
+               readOnly={disabled}
+               maw={120}
+               miw={120}
+               {...field}
+               description={description}
+               min={0}
+               max={4294967295}
+               withAsterisk={isRequired}
+               error={getError(fieldName, name)}
+               precision={decimals}
+               hideControls
+               parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+               formatter={formatter}
+            />
+         )}
+      />
+   )
+   const type = fieldName.substring(36)
+   const formatter = (value) =>
+      !Number.isNaN(parseFloat(value))
+         ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+         : ""
    return (
       <>
-         {fieldName.substring(36) === "DetailOrderItemQuantity" && (
-            <Controller
-               name={fieldName}
-               control={control}
-               rules={isRequired ? { required: true } : undefined}
-               render={({ field }) => (
-                  <NumberInput
-                     readOnly={disabled}
-                     maw={120}
-                     miw={120}
-                     {...field}
-                     min={0}
-                     max={4294967295}
-                     withAsterisk={isRequired}
-                     error={
-                        isRequired &&
-                        errors[fieldName]?.type === "required" &&
-                        t(`errorInput${name}`)
-                     }
-                     precision={decimals}
-                     hideControls
-                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-                     formatter={(value) =>
-                        !Number.isNaN(parseFloat(value))
-                           ? `${value}`.replace(
-                                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
-                                ","
-                             )
-                           : ""
-                     }
-                  />
-               )}
-            />
-         )}
-         {fieldName.substring(36) === "DetailOrderItemCost" && (
-            <Controller
-               name={fieldName}
-               control={control}
-               rules={isRequired ? { required: true } : undefined}
-               render={({ field }) => (
-                  <NumberInput
-                     readOnly={disabled}
-                     maw={120}
-                     miw={120}
-                     {...field}
-                     description={
-                        detailOrderItemData[
-                           `${fieldName.substring(
-                              0,
-                              36
-                           )}DetailOrderItemCostSimple`
-                        ]
-                     }
-                     min={0}
-                     max={4294967295}
-                     withAsterisk={isRequired}
-                     error={
-                        isRequired &&
-                        errors[fieldName]?.type === "required" &&
-                        t(`errorInput${name}`)
-                     }
-                     precision={decimals}
-                     hideControls
-                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-                     formatter={(value) =>
-                        !Number.isNaN(parseFloat(value))
-                           ? `${value}`.replace(
-                                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
-                                ","
-                             )
-                           : ""
-                     }
-                  />
-               )}
-            />
-         )}
-         {fieldName.substring(36) === "DetailOrderItemDiscount" && (
-            <Controller
-               name={fieldName}
-               control={control}
-               rules={isRequired ? { required: true } : undefined}
-               render={({ field }) => (
-                  <NumberInput
-                     readOnly={disabled}
-                     maw={120}
-                     miw={120}
-                     {...field}
-                     description={
-                        detailOrderItemData[
-                           `${fieldName.substring(
-                              0,
-                              36
-                           )}DetailOrderItemDiscountSimple`
-                        ]
-                     }
-                     min={0}
-                     max={4294967295}
-                     withAsterisk={isRequired}
-                     error={
-                        isRequired &&
-                        errors[fieldName]?.type === "required" &&
-                        t(`errorInput${name}`)
-                     }
-                     precision={decimals}
-                     hideControls
-                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-                     formatter={(value) =>
-                        !Number.isNaN(parseFloat(value))
-                           ? `${value}`.replace(
-                                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
-                                ","
-                             )
-                           : ""
-                     }
-                  />
-               )}
-            />
-         )}
-         {fieldName.substring(36) === "DetailOrderItemTax" && (
-            <Controller
-               name={fieldName}
-               control={control}
-               rules={isRequired ? { required: true } : undefined}
-               render={({ field }) => (
-                  <NumberInput
-                     readOnly={disabled}
-                     maw={120}
-                     miw={120}
-                     {...field}
-                     description={
-                        detailOrderItemData[
-                           `${fieldName.substring(
-                              0,
-                              36
-                           )}DetailOrderItemTaxSimple`
-                        ]
-                     }
-                     {...field}
-                     min={0}
-                     max={4294967295}
-                     withAsterisk={isRequired}
-                     error={
-                        isRequired &&
-                        errors[fieldName]?.type === "required" &&
-                        t(`errorInput${name}`)
-                     }
-                     precision={decimals}
-                     hideControls
-                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-                     formatter={(value) =>
-                        !Number.isNaN(parseFloat(value))
-                           ? `${value} %`.replace(
-                                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
-                                ","
-                             )
-                           : " %"
-                     }
-                  />
-               )}
-            />
-         )}
-         {fieldName.substring(36) === "DetailOrderItemSubTotal" && (
-            <Controller
-               name={fieldName}
-               control={control}
-               rules={isRequired ? { required: true } : undefined}
-               render={({ field }) => (
-                  <NumberInput
-                     readOnly={disabled}
-                     maw={120}
-                     miw={120}
-                     {...field}
-                     description={
-                        detailOrderItemData[
-                           `${fieldName.substring(
-                              0,
-                              36
-                           )}DetailOrderItemSubTotal`
-                        ]
-                     }
-                     min={0}
-                     max={4294967295}
-                     withAsterisk={isRequired}
-                     error={
-                        isRequired &&
-                        errors[fieldName]?.type === "required" &&
-                        t(`errorInput${name}`)
-                     }
-                     precision={decimals}
-                     hideControls
-                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-                     formatter={(value) =>
-                        !Number.isNaN(parseFloat(value))
-                           ? `${value}`.replace(
-                                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
-                                ","
-                             )
-                           : ""
-                     }
-                  />
-               )}
-            />
-         )}
+         {type === "DetailOrderItemQuantity" &&
+            getController(fieldName, undefined, formatter)}
+         {type === "DetailOrderItemCost" &&
+            getController(
+               fieldName,
+               getDetailOrderItemData(fieldName, "DetailOrderItemCostSimple"),
+               formatter
+            )}
+         {type === "DetailOrderItemDiscount" &&
+            getController(
+               fieldName,
+               getDetailOrderItemData(
+                  fieldName,
+                  "DetailOrderItemDiscountSimple"
+               ),
+               formatter
+            )}
+         {type === "DetailOrderItemTax" &&
+            getController(
+               fieldName,
+               getDetailOrderItemData(fieldName, "DetailOrderItemTaxSimple"),
+               formatter
+            )}
+         {type === "DetailOrderItemSubTotal" &&
+            getController(
+               fieldName,
+               getDetailOrderItemData(fieldName, "DetailOrderItemSubTotal"),
+               formatter
+            )}
       </>
    )
 }

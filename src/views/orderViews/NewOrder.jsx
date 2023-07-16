@@ -79,14 +79,6 @@ const NewOrder = () => {
          prev.TotalTax -= prev[`${id}DetailOrderItemTaxForTotal`]
          prev.TotalSubTotal -= prev[`${id}DetailOrderItemSubTotal`]
 
-         prev[`${id}DetailOrderItemQuantity`] = 0
-         prev[`${id}DetailOrderItemCost`] = 0
-         prev[`${id}DetailOrderItemDiscount`] = 0
-         prev[`${id}DetailOrderItemTax`] = 0
-         prev[`${id}DetailOrderItemSubTotal`] = 0
-         prev[`${id}DetailOrderItemLote`] = ""
-         prev[`${id}DetailOrderItemExpirationDate`] = new Date()
-
          methods.setValue(`${id}DetailOrderItemQuantity`, 0)
          methods.setValue(`${id}DetailOrderItemCost`, 0)
          methods.setValue(`${id}DetailOrderItemDiscount`, 0)
@@ -209,7 +201,7 @@ const NewOrder = () => {
                      }
                   />
                   <Table>
-                     <ScrollArea w={width}>
+                     <ScrollArea w={width} mih={220}>
                         <thead>
                            <Box component="tr">
                               <th>Item</th>
@@ -337,11 +329,11 @@ const NewOrder = () => {
                   </Group>
                </form>
             </FormProvider>
-            {JSON.stringify(detailOrderItemData)
+            {/*            {JSON.stringify(detailOrderItemData)
                .split(",")
                .map((item) => (
                   <p>{item}</p>
-               ))}
+               ))}*/}
          </Card>
       </Box>
    )

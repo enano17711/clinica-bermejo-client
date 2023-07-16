@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { Controller, useWatch } from "react-hook-form"
 import { firstLetterToLower } from "../../../utils/index.js"
 import { Select } from "@mantine/core"
-import { useAtom } from "jotai"
+import { useSetAtom } from "jotai"
 import { detailOrderItemDataAtom } from "../../../store/jotai/atoms/OrderAtoms.js"
 
 const SelectInputForOrderCreation = ({
@@ -14,9 +14,7 @@ const SelectInputForOrderCreation = ({
 }) => {
    const { t } = useTranslation()
    const fieldName = firstLetterToLower(name)
-   const [detailOrderItemData, setDetailOrderItemData] = useAtom(
-      detailOrderItemDataAtom
-   )
+   const setDetailOrderItemData = useSetAtom(detailOrderItemDataAtom)
 
    const inputValue = useWatch({ name: fieldName, control })
 
