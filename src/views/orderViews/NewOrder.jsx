@@ -24,6 +24,7 @@ import { IconTrash } from "@tabler/icons-react"
 import { useAtom } from "jotai"
 import { detailOrderItemDataAtom } from "../../store/jotai/atoms/OrderAtoms.js"
 import SelectInputForOrderCreation from "./components/SelectInputForOrderCreation.jsx"
+import NumberInputForCreation from "../../components/NumberInputForCreation.jsx"
 
 const routes = [
    { path: "/", title: "Inicio" },
@@ -35,6 +36,8 @@ const NewOrder = () => {
    const [detailOrderItemData, setDetailOrderItemData] = useAtom(
       detailOrderItemDataAtom
    )
+
+   const [orderTotals, setOrderTotals] = useState({})
 
    const { ref, width, height } = useElementSize()
 
@@ -95,6 +98,8 @@ const NewOrder = () => {
    }
 
    const watchInput = methods.watch("itemsIds")
+   const watchOrderTax = methods.watch("orderTax")
+   const watchOrderDiscount = methods.watch("orderDiscount")
    useEffect(() => {
       if (
          watchInput !== null &&
@@ -147,6 +152,20 @@ const NewOrder = () => {
          })
       }
    }, [watchInput, itemsData])
+
+   useEffect(() => {
+      const totalSubTotal = Number.parseFloat(detailOrderItemData.TotalSubTotal)
+      const convertSubTotal = isNaN(totalSubTotal) ? 0 : totalSubTotal
+      const orderTax = convertSubTotal * (watchOrderTax / 100)
+      const orderGrandTotal = convertSubTotal + orderTax - watchOrderDiscount
+      setOrderTotals((prevState) => {
+         return {
+            ...prevState,
+            orderTax: orderTax.toFixed(2),
+            orderGrandTotal: orderGrandTotal.toFixed(2),
+         }
+      })
+   }, [watchOrderTax, watchOrderDiscount, detailOrderItemData.TotalSubTotal])
 
    return (
       <Box>
@@ -319,6 +338,22 @@ const NewOrder = () => {
                         </tfoot>
                      </ScrollArea>
                   </Table>
+                  <Group>
+                     <NumberInputForCreation
+                        name="OrderTax"
+                        model="Order"
+                        control={methods.control}
+                        errors={methods.formState.errors}
+                        decimals={2}
+                     />
+                     <NumberInputForCreation
+                        name="OrderDiscount"
+                        model="Order"
+                        control={methods.control}
+                        errors={methods.formState.errors}
+                        decimals={2}
+                     />
+                  </Group>
                   <TextAreaInputForCreation
                      name="OrderNote"
                      model="Order"
@@ -329,6 +364,17 @@ const NewOrder = () => {
                   </Group>
                </form>
             </FormProvider>
+            <Table withColumnBorders>
+               <thead>
+                  <tr>
+                     <th>Items {itemsDetailOrder.length}</th>
+                     <th>Sub Total {detailOrderItemData.TotalSubTotal}</th>
+                     <th>Orden Imp. {orderTotals.orderTax}</th>
+                     <th>Orden Desc. {watchOrderDiscount}</th>
+                     <th>Orden Total {orderTotals.orderGrandTotal}</th>
+                  </tr>
+               </thead>
+            </Table>
             {/*            {JSON.stringify(detailOrderItemData)
                .split(",")
                .map((item) => (

@@ -20,8 +20,8 @@ const TextAreaInputForCreation = ({ name, model, control, errors = null }) => {
                      placeholder={t(`placeHolderInput${name}${model}`)}
                      icon={<IconSignature size={14} />}
                      autosize
-                     minRows={2}
-                     maxRows={5}
+                     minRows={5}
+                     maxRows={8}
                   />
                )}
             />
